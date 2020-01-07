@@ -5,6 +5,8 @@ pb git
 pb config
 pb gtk
 
+instanttheme arc
+
 # gtk theme
 if ! themeexists Arc &>/dev/null; then
     command -v pacman && sudo pacman -S --noconfirm arc-gtk-theme

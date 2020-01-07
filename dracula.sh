@@ -4,6 +4,8 @@ source <(curl -Ls https://git.io/JerLG)
 pb git
 pb gtk
 
+instanttheme dracula
+
 # gtk theme
 if themeexists materiacula &>/dev/null && icons_exist materiacula &>/dev/null; then
     echo "gtk theme dracula found"
