@@ -3,6 +3,7 @@
 source <(curl -Ls https://git.io/JerLG)
 pb git
 pb gtk
+pb instantos
 
 instanttheme dracula
 

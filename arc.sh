@@ -4,6 +4,7 @@ source <(curl -Ls https://git.io/JerLG)
 pb git
 pb config
 pb gtk
+pb instantos
 
 instanttheme arc
 
