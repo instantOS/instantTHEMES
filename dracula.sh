@@ -29,3 +29,8 @@ dunsttheme dracula
 
 curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/monaco.sh" | bash
 curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
+
+curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/dracula" >~/.Xresources
+xrdb ~/.Xresources
+
+echo "done installing dracula theme"

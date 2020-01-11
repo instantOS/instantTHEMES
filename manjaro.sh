@@ -51,4 +51,8 @@ dunsttheme manjaro
 
 setcursor Breeze
 
+
+curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/manjaro" > ~/.Xresources
+xrdb ~/.Xresources
+
 echo "done installing manjaro theme"

@@ -39,3 +39,9 @@ dunsttheme mac
 
 gtkfont 'SF Pro Display 10'
 gtkdocumentfont 'SF Pro Text 10'
+
+
+curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/mac" > ~/.Xresources
+xrdb ~/.Xresources
+
+echo "done installing mac theme"
