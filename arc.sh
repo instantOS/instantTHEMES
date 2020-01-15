@@ -1,4 +1,5 @@
 #!/bin/bash
+cd
 
 source <(curl -Ls https://git.io/JerLG)
 pb git
@@ -8,11 +9,6 @@ pb instantos
 
 instanttheme arc
 
-# gtk theme
-if ! themeexists Arc &>/dev/null; then
-    command -v pacman && sudo pacman -S --noconfirm arc-gtk-theme
-    command -v apt-get && sudo apt-get install -y arc-theme
-fi
 gtktheme Arc
 
 # gtk icons
@@ -37,6 +33,5 @@ curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sour
 curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
 
 curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/arc" > ~/.Xresources
-xrdb ~/.Xresources
 
 echo "done installing arc theme"

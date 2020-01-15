@@ -1,5 +1,6 @@
 #!/bin/bash
 # manjaro like style
+cd
 
 source <(curl -Ls https://git.io/JerLG)
 pb git
@@ -53,6 +54,5 @@ setcursor Breeze
 
 
 curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/manjaro" > ~/.Xresources
-xrdb ~/.Xresources
 
 echo "done installing manjaro theme"

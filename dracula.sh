@@ -1,4 +1,5 @@
 #!/bin/bash
+cd
 
 source <(curl -Ls https://git.io/JerLG)
 pb git
@@ -31,6 +32,5 @@ curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/mona
 curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
 
 curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/dracula" >~/.Xresources
-xrdb ~/.Xresources
 
 echo "done installing dracula theme"
