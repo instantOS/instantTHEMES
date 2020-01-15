@@ -24,6 +24,8 @@ if ! icons_exist Papirus &>/dev/null; then
 fi
 
 gtkicons Papirus
+
+papercursor elementary
 setcursor elementary
 
 rofitheme arc
@@ -32,6 +34,6 @@ dunsttheme arc
 curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sourcecodepro.sh" | bash
 curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
 
-curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/arc" > ~/.Xresources
+curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/arc" >~/.Xresources
 
 echo "done installing arc theme"

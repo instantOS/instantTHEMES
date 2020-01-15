@@ -23,6 +23,7 @@ gtktheme materiacula
 gtkicons materiacula
 gtkfont "Roboto 10"
 
+papercursor paper
 setcursor paper
 
 rofitheme dracula

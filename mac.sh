@@ -31,6 +31,7 @@ if ! icons_exist McMojave-circle &>/dev/null; then
 fi
 gtkicons McMojave-circle
 
+papercursor osx
 setcursor osx
 
 curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sfpro.sh" | bash
