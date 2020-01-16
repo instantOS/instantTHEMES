@@ -58,4 +58,4 @@
 *color7:                S_base2
 *color15:               S_base3
 
-URxvt.font: xft:SF Mono-Regular:size=13
+URxvt.font: xft:SF Mono:size=13
