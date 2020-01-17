@@ -40,9 +40,8 @@ rofitheme mac
 dunsttheme mac
 
 gtkfont 'SF Pro Display 10'
-gtkdocumentfont 'SF Pro Text 10'
+# gtkdocumentfont 'SF Pro Text 10'
 
-
-curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/mac" > ~/.Xresources
+curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/mac" >~/.Xresources
 
 echo "done installing mac theme"
