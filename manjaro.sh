@@ -2,57 +2,66 @@
 # manjaro like style
 cd
 
-source <(curl -Ls https://git.io/JerLG)
 pb git
 pb gtk
 pb unpack
 pb instantos
 
-instanttheme manjaro
+themefetch() {
+    mkdir /tmp/manjarotheme
+    cd /tmp/manjarotheme
 
-mkdir /tmp/manjarotheme
-cd /tmp/manjarotheme
+    if ! themeexists matcha &>/dev/null; then
+        git clone --depth=1 https://github.com/vinceliuice/matcha.git
+        cd matcha
+        ./Install
+        cd ..
+        rm -rf matcha
+    fi
 
-if ! themeexists matcha &>/dev/null; then
-    git clone --depth=1 https://github.com/vinceliuice/matcha.git
-    cd matcha
-    ./Install
-    cd ..
-    rm -rf matcha
+    if ! icons_exist "Papirus-Maia" &>/dev/null; then
+        git clone --depth=1 https://github.com/Ste74/papirus-maia-icon-theme.git
+        cd papirus-maia-icon-theme
+        mkdir ~/.icons &>/dev/null
+        mv Papirus* ~/.icons
+        cd ..
+        rm -rf papirus-maia-icon-theme
+    fi
+    curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sourcecodepro.sh" | bash
+    curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
+
+    if ! [ -e ~/.icons/Breeze ]; then
+        mkdir ~/.icons &>/dev/null
+        cd ~/.icons
+        svn export "https://github.com/KDE/breeze.git/trunk/cursors/Breeze/Breeze"
+    fi
+
+}
+
+themeapply() {
+    instanttheme manjaro
+
+    gtktheme "Matcha-sea"
+    gtkicons "Papirus-Maia"
+
+    rofitheme manjaro
+    dunsttheme manjaro
+
+    setcursor Breeze
+    xtheme manjaro
+}
+
+if [ -n "$1" ]; then
+    case "$1" in
+    apply)
+        themeapply
+        ;;
+    fetch)
+        themefetch
+        ;;
+    *)
+        themefetch
+        themeapply
+        ;;
+    esac
 fi
-gtktheme "Matcha-sea"
-
-if ! icons_exist "Papirus-Maia" &>/dev/null; then
-    git clone --depth=1 https://github.com/Ste74/papirus-maia-icon-theme.git
-    cd papirus-maia-icon-theme
-    mkdir ~/.icons &>/dev/null
-    mv Papirus* ~/.icons
-    cd ..
-    rm -rf papirus-maia-icon-theme
-fi
-
-gtkicons "Papirus-Maia"
-
-# rofi setup
-mkdir -p ~/.config/rofi &>/dev/null
-curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/rofi/manjaro.rasi" >~/.config/rofi/arc.rasi
-echo 'rofi.theme: ~/.config/rofi/manjaro.rasi' >~/.config/rofi/config
-
-curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sourcecodepro.sh" | bash
-curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
-
-if ! [ -e ~/.icons/Breeze ]; then
-    mkdir ~/.icons &>/dev/null
-    cd ~/.icons
-    svn export "https://github.com/KDE/breeze.git/trunk/cursors/Breeze/Breeze"
-fi
-
-rofitheme manjaro
-dunsttheme manjaro
-
-setcursor Breeze
-
-
-curl -s "https://raw.githubusercontent.com/instantOS/instantTHEMES/master/xresources/manjaro" > ~/.Xresources
-
-echo "done installing manjaro theme"
