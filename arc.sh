@@ -5,6 +5,7 @@
 ############################################################################
 
 cd
+source /usr/share/paperbash/import.sh
 
 pb git
 pb config

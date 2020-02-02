@@ -5,6 +5,8 @@
 ##################################
 
 cd
+source /usr/share/paperbash/import.sh
+
 pb git
 pb gtk
 pb instantos
