@@ -1,5 +1,9 @@
 #!/bin/bash
-# manjaro like style
+
+########################
+## manjaro like style ##
+########################
+
 cd
 
 pb git
@@ -8,6 +12,8 @@ pb unpack
 pb instantos
 
 themefetch() {
+    echo "fetching manjaro theme"
+
     mkdir /tmp/manjarotheme
     cd /tmp/manjarotheme
 
@@ -39,6 +45,8 @@ themefetch() {
 }
 
 themeapply() {
+    echo "applying manjaro theme"
+
     instanttheme manjaro
 
     gtktheme "Matcha-sea"

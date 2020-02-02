@@ -1,4 +1,9 @@
 #!/bin/bash
+
+############################################################################
+## widely supported combination of arc and papirus with elementary cursor ##
+############################################################################
+
 cd
 
 pb git
@@ -7,7 +12,7 @@ pb gtk
 pb instantos
 
 themefetch() {
-
+    echo "fetching arc theme"
     # gtk icons
     if ! icons_exist Papirus &>/dev/null; then
         pushd .
@@ -26,6 +31,7 @@ themefetch() {
 }
 
 themeapply() {
+    echo "applying arc theme"
     instanttheme arc
 
     gtktheme Arc

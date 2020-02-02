@@ -1,12 +1,16 @@
 #!/bin/bash
-cd
 
+##################################
+## materiacula and paper cursor ##
+##################################
+
+cd
 pb git
 pb gtk
 pb instantos
 
 themefetch() {
-    # gtk theme
+    echo "fetching dracula theme"
     if ! themeexists materiacula &>/dev/null && icons_exist materiacula &>/dev/null; then
         gitclone materiacula
         cd materiacula
@@ -20,6 +24,8 @@ themefetch() {
 }
 
 themeapply() {
+    echo "applying dracula theme"
+
     instanttheme dracula
 
     gtktheme materiacula

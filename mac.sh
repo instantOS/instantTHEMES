@@ -1,4 +1,9 @@
 #!/bin/bash
+
+##############################
+## theme emulating mac look ##
+##############################
+
 cd
 
 pb git
@@ -7,6 +12,8 @@ pb unpack
 pb instantos
 
 themefetch() {
+    echo "fetching mac theme"
+
     mkdir -p ~/.cache/mactheme
     cd ~/.cache/mactheme
 
@@ -30,6 +37,8 @@ themefetch() {
 }
 
 themeapply() {
+    echo "applying mac theme"
+
     instanttheme mac
     gtkicons McMojave-circle
 
