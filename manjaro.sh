@@ -4,14 +4,6 @@
 ## manjaro like style ##
 ########################
 
-cd
-source /usr/share/paperbash/import.sh
-
-pb git
-pb gtk
-pb unpack
-pb instantos
-
 themefetch() {
     echo "fetching manjaro theme"
 
@@ -46,9 +38,6 @@ themefetch() {
 }
 
 themeapply() {
-    echo "applying manjaro theme"
-
-    instanttheme manjaro
 
     gtktheme "Matcha-sea"
     gtkicons "Papirus-Maia"
@@ -59,18 +48,3 @@ themeapply() {
     setcursor Breeze
     xtheme manjaro
 }
-
-if [ -n "$1" ]; then
-    case "$1" in
-    apply)
-        themeapply
-        ;;
-    fetch)
-        themefetch
-        ;;
-    *)
-        themefetch
-        themeapply
-        ;;
-    esac
-fi

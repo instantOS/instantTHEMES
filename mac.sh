@@ -4,14 +4,6 @@
 ## theme emulating mac look ##
 ##############################
 
-cd
-source /usr/share/paperbash/import.sh
-
-pb git
-pb gtk
-pb unpack
-pb instantos
-
 themefetch() {
     echo "fetching mac theme"
 
@@ -38,9 +30,7 @@ themefetch() {
 }
 
 themeapply() {
-    echo "applying mac theme"
 
-    instanttheme mac
     gtkicons McMojave-circle
 
     papercursor osx
@@ -51,18 +41,3 @@ themeapply() {
     dunsttheme mac
     gtkfont 'SF Pro Display 10'
 }
-
-if [ -n "$1" ]; then
-    case "$1" in
-    apply)
-        themeapply
-        ;;
-    fetch)
-        themefetch
-        ;;
-    *)
-        themefetch
-        themeapply
-        ;;
-    esac
-fi

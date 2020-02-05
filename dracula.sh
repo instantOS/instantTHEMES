@@ -4,13 +4,6 @@
 ## materiacula and paper cursor ##
 ##################################
 
-cd
-source /usr/share/paperbash/import.sh
-
-pb git
-pb gtk
-pb instantos
-
 themefetch() {
     echo "fetching dracula theme"
     if ! themeexists materiacula &>/dev/null && icons_exist materiacula &>/dev/null; then
@@ -26,9 +19,6 @@ themefetch() {
 }
 
 themeapply() {
-    echo "applying dracula theme"
-
-    instanttheme dracula
 
     gtktheme materiacula
     gtkicons materiacula
@@ -42,17 +32,3 @@ themeapply() {
     xtheme dracula
 }
 
-if [ -n "$1" ]; then
-    case "$1" in
-    apply)
-        themeapply
-        ;;
-    fetch)
-        themefetch
-        ;;
-    *)
-        themefetch
-        themeapply
-        ;;
-    esac
-fi

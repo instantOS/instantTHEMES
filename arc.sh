@@ -4,13 +4,6 @@
 ## widely supported combination of arc and papirus with elementary cursor ##
 ############################################################################
 
-cd
-source /usr/share/paperbash/import.sh
-
-pb git
-pb config
-pb gtk
-pb instantos
 
 themefetch() {
     echo "fetching arc theme"
@@ -32,8 +25,6 @@ themefetch() {
 }
 
 themeapply() {
-    echo "applying arc theme"
-    instanttheme arc
 
     gtktheme Arc
     gtkicons Papirus
@@ -45,18 +36,3 @@ themeapply() {
     dunsttheme arc
     xtheme arc
 }
-
-if [ -n "$1" ]; then
-    case "$1" in
-    apply)
-        themeapply
-        ;;
-    fetch)
-        themefetch
-        ;;
-    *)
-        themefetch
-        themeapply
-        ;;
-    esac
-fi

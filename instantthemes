@@ -1,0 +1,42 @@
+#!/bin/bash
+
+cd
+source /usr/share/paperbash/import.sh
+
+pb git
+pb config
+pb gtk
+pb instantos
+
+if [ -n "$2" ]; then
+    APPLYTHEME=$2
+else
+    if [ -e ~/instantos/themes/config ]; then
+        APPLYTHEME=$(cat ~/instantos/themes/config)
+    else
+        echo "using default theme"
+        APPLYTHEME="arc"
+    fi
+fi
+
+source /usr/share/instantthemes/$APPLYTHEME.sh
+ACTION=${1:-apply}
+
+tapply() {
+    echo "applying $APPLYTHEME theme"
+    instanttheme $APPLYTHEME
+    themeapply
+}
+
+case "$ACTION" in
+a)
+    tapply
+    ;;
+f)
+    themefetch
+    ;;
+*)
+    themefetch
+    tapply
+    ;;
+esac
