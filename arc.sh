@@ -4,7 +4,6 @@
 ## widely supported combination of arc and papirus with elementary cursor ##
 ############################################################################
 
-
 themefetch() {
     echo "fetching arc theme"
     # gtk icons
@@ -21,6 +20,7 @@ themefetch() {
 
     curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sourcecodepro.sh" | bash
     curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
+    papercursor elementary
 
 }
 
@@ -29,10 +29,9 @@ themeapply() {
     gtktheme Arc
     gtkicons Papirus
 
-    papercursor elementary
+    xtheme arc
     setcursor elementary
 
     rofitheme arc
     dunsttheme arc
-    xtheme arc
 }

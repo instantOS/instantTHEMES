@@ -44,7 +44,6 @@ themeapply() {
 
     rofitheme manjaro
     dunsttheme manjaro
-
-    setcursor Breeze
     xtheme manjaro
+    setcursor Breeze
 }

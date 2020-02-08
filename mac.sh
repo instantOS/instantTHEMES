@@ -26,6 +26,7 @@ themefetch() {
         cd ..
     fi
     curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sfpro.sh" | bash
+    papercursor osx
 
 }
 
@@ -33,7 +34,7 @@ themeapply() {
 
     gtkicons McMojave-circle
 
-    papercursor osx
+    xtheme mac
     setcursor osx
     gtktheme Mojave-light
 
