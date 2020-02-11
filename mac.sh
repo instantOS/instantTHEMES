@@ -30,13 +30,22 @@ themefetch() {
 
 }
 
+lighttheme() {
+    gtkicons McMojave-circle
+    gtktheme Mojave-light
+}
+
+darktheme() {
+    gtkicons McMojave-circle-dark
+    gtktheme Mojave-dark
+}
+
 themeapply() {
 
-    gtkicons McMojave-circle
+    lighttheme
 
     xtheme mac
     setcursor osx
-    gtktheme Mojave-light
 
     rofitheme mac
     dunsttheme mac

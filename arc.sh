@@ -24,11 +24,19 @@ themefetch() {
 
 }
 
-themeapply() {
-
+lighttheme() {
     gtktheme Arc
     gtkicons Papirus
+}
 
+darktheme() {
+    gtktheme Arc-Dark
+    gtkicons Papirus-Dark
+}
+
+themeapply() {
+
+    lighttheme
     xtheme arc
     setcursor elementary
 

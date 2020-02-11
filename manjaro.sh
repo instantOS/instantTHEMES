@@ -37,11 +37,20 @@ themefetch() {
 
 }
 
-themeapply() {
-
+lighttheme() {
     gtktheme "Matcha-sea"
     gtkicons "Papirus-Maia"
 
+}
+
+darktheme() {
+    gtktheme "Matcha-dark-sea"
+    gtkicons "Papirus-Dark-Maia"
+}
+
+themeapply() {
+
+    lighttheme
     rofitheme manjaro
     dunsttheme manjaro
     xtheme manjaro

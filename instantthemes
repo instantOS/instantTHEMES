@@ -35,6 +35,13 @@ a)
 f)
     themefetch
     ;;
+d)
+    if command -v darktheme; then
+        darktheme
+    else
+        echo "no dark theme available for $APPLYTHEME"
+    fi
+    ;;
 *)
     themefetch
     tapply
