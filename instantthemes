@@ -38,6 +38,7 @@ f)
 d)
     if command -v darktheme; then
         darktheme
+        exit
     else
         echo "no dark theme available for $APPLYTHEME"
     fi
@@ -45,6 +46,7 @@ d)
 l)
     if command -v lighttheme; then
         lighttheme
+        exit
     else
         echo "no light theme available for $APPLYTHEME"
     fi
