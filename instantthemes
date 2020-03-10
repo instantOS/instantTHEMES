@@ -1,5 +1,10 @@
 #!/bin/bash
 
+################################################################################
+## theming app for instantOS                                                  ##
+## Aims to configure as much applications as possible to conform to the theme ##
+################################################################################
+
 cd
 source /usr/share/paperbash/import.sh
 
@@ -24,7 +29,7 @@ ACTION=${1:-apply}
 
 tapply() {
     echo "applying $APPLYTHEME theme"
-    instanttheme $APPLYTHEME
+    instanttheme "$APPLYTHEME"
     themeapply
 }
 
