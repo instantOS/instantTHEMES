@@ -35,4 +35,4 @@
 *color7: #CCCCCC
 *color15: #FFFFFF
 
-URxvt.font: xft:SauceCodePro Nerd Font Mono:size=13
+URxvt.font: xft:Fira Code Nerd Font Mono:size=13
