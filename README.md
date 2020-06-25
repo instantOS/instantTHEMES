@@ -7,14 +7,14 @@
 instantTHEMES is a utility to provide theming for isntantOS
 it includes
 
-- cursor theme (gtk and xorg)
-- gtk theme
-- qt theme
-- xresources
-- dunst theme
-- fonts
-- icon theme
-- a light and dark version
+-   cursor theme (gtk and xorg)
+-   gtk theme
+-   qt theme
+-   xresources
+-   dunst theme
+-   fonts
+-   icon theme
+-   a light and dark version
 
 it is used by instantOS in the background and is probably of little use outside of that
 It depends on paperbash to work. 
