@@ -20,7 +20,7 @@ themefetch() {
 
     curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sourcecodepro.sh" | bash
     curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
-    papercursor elementary
+    papercursor elementary-instantos
 
 }
 
@@ -38,7 +38,7 @@ themeapply() {
 
     lighttheme
     xtheme arc
-    setcursor elementary
+    setcursor elementary-instantos
 
     rofitheme arc
     dunsttheme arc

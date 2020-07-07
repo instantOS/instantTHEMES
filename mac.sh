@@ -26,7 +26,7 @@ themefetch() {
         cd ..
     fi
     curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sfpro.sh" | bash
-    papercursor osx
+    papercursor osx-instantos
 
 }
 
@@ -45,7 +45,7 @@ themeapply() {
     lighttheme
 
     xtheme mac
-    setcursor osx
+    setcursor osx-instantos
 
     rofitheme mac
     dunsttheme mac

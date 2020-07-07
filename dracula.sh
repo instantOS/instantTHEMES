@@ -15,7 +15,7 @@ themefetch() {
     fi
     curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/monaco.sh" | bash
     curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
-    papercursor paper
+    papercursor paper-instantos
 
 }
 
@@ -26,7 +26,7 @@ themeapply() {
     gtkfont "Roboto 10"
     xtheme dracula
 
-    setcursor paper
+    setcursor paper-instantos
 
     rofitheme dracula
     dunsttheme dracula
