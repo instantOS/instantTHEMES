@@ -1,7 +1,7 @@
 <div align="center">
     <h1>instantTHEMES</h1>
     <p>Theming for instantOS</p>
-    <img width="300" height="300" src="https://raw.githubusercontent.com/instantOS/instantLOGO/master/png/theme.png">
+    <img width="300" height="300" src="https://media.githubusercontent.com/media/instantOS/instantLOGO/master/png/theme.png">
 </div>
 
 instantTHEMES is a utility to provide theming for isntantOS
