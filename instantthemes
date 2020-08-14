@@ -32,6 +32,7 @@ tapply() {
     instanttheme "$APPLYTHEME"
     themeapply
     sed -i 's/\\n//g' ~/.Xresources
+    instantdpi
 }
 
 case "$ACTION" in
