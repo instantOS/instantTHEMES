@@ -25,7 +25,7 @@ themefetch() {
         ./install.sh
         cd ..
     fi
-    curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sfpro.sh" | bash
+    curl -s "https://raw.githubusercontent.com/instantos/dotfiles/master/fonts/sfpro.sh" | bash
     papercursor osx-instantos
 
 }

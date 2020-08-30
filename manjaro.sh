@@ -26,8 +26,8 @@ themefetch() {
         cd ..
         rm -rf papirus-maia-icon-theme
     fi
-    curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sourcecodepro.sh" | bash
-    curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
+    curl -s "https://raw.githubusercontent.com/instantos/dotfiles/master/fonts/sourcecodepro.sh" | bash
+    curl -s "https://raw.githubusercontent.com/instantos/dotfiles/master/fonts/roboto.sh" | bash
 
     if ! [ -e ~/.icons/Breeze ]; then
         mkdir ~/.icons &>/dev/null

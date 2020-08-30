@@ -13,8 +13,8 @@ themefetch() {
         cd ..
         rm -rf materiacula
     fi
-    curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/monaco.sh" | bash
-    curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/roboto.sh" | bash
+    curl -s "https://raw.githubusercontent.com/instantos/dotfiles/master/fonts/monaco.sh" | bash
+    curl -s "https://raw.githubusercontent.com/instantos/dotfiles/master/fonts/roboto.sh" | bash
     papercursor paper-instantos
 
 }
