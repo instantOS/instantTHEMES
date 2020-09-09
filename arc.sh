@@ -39,7 +39,7 @@ themeapply() {
     lighttheme
     xtheme arc
     setcursor elementary-instantos
-
+    gtkfont "Calibre 10"
     rofitheme arc
     dunsttheme arc
 }

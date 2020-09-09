@@ -31,6 +31,7 @@ tapply() {
     echo "applying $APPLYTHEME theme"
     instanttheme "$APPLYTHEME"
     themeapply
+    # some things result in empty lines in xresources
     sed -i 's/\\n//g' ~/.Xresources
     instantdpi
 }
