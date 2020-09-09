@@ -80,6 +80,19 @@ installtheme() {
     popd || exit 1
 }
 
+readtheme() {
+    source /usr/share/instantthemes/config/"$1"
+    GTKTHEME="${GTKTHEME:-Arc}"
+    DGTKTHEME="${DGTKTHEME:-$GTKTHEME}"
+    GTKICONS="${GTKICONS:-Papirus}"
+    DGTKICONS="${DGTKICONS:-$DGTKICONS}"
+
+    ROFITHEME="${ROFITHEME:-$THEMENAME}"
+    XTHEME="${XTHEME:-$THEMENAME}"
+    DUNSTTHEME="${DUNSTTHEME:-$THEMENAME}"
+
+}
+
 case "$ACTION" in
 a)
     tapply

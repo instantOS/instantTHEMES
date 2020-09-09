@@ -15,7 +15,7 @@ themefetch() {
         ./install.sh
         cd ..
         rm -rf papirus-icon-theme
-        popd
+        popd || exit 1
     fi
 
     curl -s "https://raw.githubusercontent.com/paperbenni/dotfiles/master/fonts/sourcecodepro.sh" | bash
