@@ -1,0 +1,8 @@
+# dracula theme
+
+THEMENAME=dracula
+
+GTKTHEME="materiacula,paprebenni/materiacula"
+GTKICONS="materiacula"
+GTKFONT="Roboto 10,g:Roboto"
+CURSORTHEME=paper-instantos
