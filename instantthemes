@@ -65,6 +65,21 @@ installfont() {
 
 }
 
+installtheme() {
+    if themeexists "$1" &>/dev/null; then
+        return
+    fi
+
+    mkdir -p /tmp/instantostemptheme
+    pushd .
+    cd /tmp/instantostemptheme || exit 1
+    git clone --depth=1 "$2" temptheme
+    cd temptheme || exit
+    ./install.sh
+    rm -rf /tmp/instantostemptheme
+    popd || exit 1
+}
+
 case "$ACTION" in
 a)
     tapply
