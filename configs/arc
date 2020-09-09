@@ -1,0 +1,11 @@
+# Default Arc theme
+
+GTKTHEME=Arc
+GTKICONS=Papirus
+DGTKTHEME=Arc-Dark
+DGTKICONS=Papirus-dark
+GTKFONT="Calibre 10"
+XTHEME=arc
+CURSORTHEME=elementary-instantos
+DUNSTTHEME=arc
+ROFITHEME=arc

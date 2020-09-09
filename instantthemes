@@ -36,6 +36,35 @@ tapply() {
     instantdpi
 }
 
+installfont() {
+    convert -list font | grep -iq "$1" && return
+    mkdir -p ~/.local/share/fonts &>/dev/null
+    mkdir -p /tmp/instantosfonts/"$1" || exit 1
+    pushd .
+    cd /tmp/instantosfonts/"$1" || exit
+
+    case "$2" in
+        google)
+            wget -qO font.zip "https://fonts.google.com/download?family=$3"
+            unzip font.zip
+            rm LICENSE.txt
+            rm font.zip
+            ;;
+        script)
+            if [ -e /usr/share/instantthemes/scripts/"$3".sh ]
+            then
+                /usr/share/instantthemes/scripts/"$3".sh
+            fi
+            ;;
+    esac
+
+    mv ./* ~/.local/share/fonts
+    popd
+
+    rm -rf /tmp/instantosfonts
+
+}
+
 case "$ACTION" in
 a)
     tapply
