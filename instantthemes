@@ -65,6 +65,10 @@ installfont() {
 
 }
 
+# installs a theme from git
+# installtheme themename themerepo
+# theme needs to be installable as a normal user with an install.sh script
+
 installtheme() {
     if themeexists "$1" &>/dev/null; then
         return
@@ -73,7 +77,13 @@ installtheme() {
     mkdir -p /tmp/instantostemptheme
     pushd .
     cd /tmp/instantostemptheme || exit 1
-    git clone --depth=1 "$2" temptheme
+    if grep -q '://' <<< "$2"
+    then
+        git clone --depth=1 "$2" temptheme
+    else
+        git clone --depth=1 "https://github.com/$2" temptheme
+    fi
+
     cd temptheme || exit
     ./install.sh
     rm -rf /tmp/instantostemptheme
@@ -82,15 +92,29 @@ installtheme() {
 
 readtheme() {
     source /usr/share/instantthemes/config/"$1"
+    PAPIRUSICONS="Papirus,PapirusDevelopmentTeam/papirus-icon-theme"
+
     GTKTHEME="${GTKTHEME:-Arc}"
     DGTKTHEME="${DGTKTHEME:-$GTKTHEME}"
-    GTKICONS="${GTKICONS:-Papirus}"
+    GTKICONS="${GTKICONS:-$PAPIRUSICONS}"
     DGTKICONS="${DGTKICONS:-$DGTKICONS}"
-
+    
     ROFITHEME="${ROFITHEME:-$THEMENAME}"
+    CURSORTHEME=${CURSORTHEME:-elementary-instantos}
     XTHEME="${XTHEME:-$THEMENAME}"
     DUNSTTHEME="${DUNSTTHEME:-$THEMENAME}"
 
+
+    if grep -q ',' <<< "$GTKTHEME"
+    then
+        installtheme "$(echo "$GTKTHEME" | grep -o '^[^,]*')" "$(echo "$GTKTHEME" | grep -o '[^,]*$')"
+    fi
+
+    if grep -q ',' <<< "$GTKICONS"
+    then
+        installtheme "$(echo "$GTKICONS" | grep -o '^[^,]*')" "$(echo "$GTKICONS" | grep -o '[^,]*$')"
+    fi
+    
 }
 
 case "$ACTION" in
