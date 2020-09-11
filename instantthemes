@@ -103,18 +103,57 @@ readtheme() {
     CURSORTHEME=${CURSORTHEME:-elementary-instantos}
     XTHEME="${XTHEME:-$THEMENAME}"
     DUNSTTHEME="${DUNSTTHEME:-$THEMENAME}"
+    
+    GTKFONT="${GTKFONT:-Calibre 10}"
 
+    if grep -q ',' <<< "$GTKFONT"
+    then
+        GTKFONTNAME="$(echo "$GTKFONT" | grep -o '^[^,]*')"
+        GTKFONTSOURCE="$(echo "$GTKFONT" | grep -o '[^,]*$')"
+        if grep -q 'g:' <<< "$GTKFONTSOURCE"
+        then
+            installfont google "$(grep -o '[^:]*$')"
+        elif grep -q 'm:' <<< "$GTKFONTSOURCE"
+        then
+            /usr/share/instantthemes/scrips/"$(sed 's/^..//g' <<< "$GTKFONTSOURCE")"
+        fi
+    else
+        GTKFONTNAME="$GTKFONT"
+    fi
 
     if grep -q ',' <<< "$GTKTHEME"
     then
-        installtheme "$(echo "$GTKTHEME" | grep -o '^[^,]*')" "$(echo "$GTKTHEME" | grep -o '[^,]*$')"
+        GTKTHEMENAME="$(echo "$GTKTHEME" | grep -o '^[^,]*')"
+        installtheme "$GTKTHEMENAME" "$(echo "$GTKTHEME" | grep -o '[^,]*$')"
+    else
+        GTKTHEMENAME="$GTKTHEME"
     fi
 
     if grep -q ',' <<< "$GTKICONS"
     then
-        installtheme "$(echo "$GTKICONS" | grep -o '^[^,]*')" "$(echo "$GTKICONS" | grep -o '[^,]*$')"
+        GTKICONNAME="$(echo "$GTKICONS" | grep -o '^[^,]*')"
+        installtheme "$GTKICONNAME" "$(echo "$GTKICONS" | grep -o '[^,]*$')"
+    else
+        GTKICONNAME="$GTKICONS"
     fi
+
+    setcursor "$CURSORTHEME"
+    rofitheme "$ROFITHEME"
+    dunsttheme "$DUNSTTHEME"
+    xtheme "$XTHEME"
+    # TODO: auto install fonts #
+    gtkfont "$GTKFONT"
     
+}
+
+lighttheme() {
+    gtkicons "$GTKICONS"
+    gtktheme "$GTKTHEME"
+} 
+
+darktheme() {
+    gtkicons "$DGTKICONS"
+    gtktheme "$DGTKTHEME"
 }
 
 case "$ACTION" in
