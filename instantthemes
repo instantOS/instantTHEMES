@@ -106,12 +106,15 @@ installtheme() {
 
     themenames "$1"
 
+    # todo: install termfont
     # ensure font is installed
     if grep -q ',' <<<"$GTKFONT"; then
         GTKFONTNAME="$(echo "$GTKFONT" | grep -o '^[^,]*')"
         GTKFONTSOURCE="$(echo "$GTKFONT" | grep -o '[^,]*$')"
         if grep -q 'g:' <<<"$GTKFONTSOURCE"; then
             installfont google "$(grep -o '[^:]*$')"
+        elif grep -q 's:' <<<"$GTKFONTSOURCE"; then
+            installfont script "$(grep -o '[^:]*$')"
         elif grep -q 'm:' <<<"$GTKFONTSOURCE"; then
             /usr/share/instantthemes/scrips/"$(sed 's/^..//g' <<<"$GTKFONTSOURCE")"
         fi

@@ -3,9 +3,10 @@ THEMENAME=arc
 
 GTKTHEME="Arc"
 GTKICONS="Papirus,PapirusDevelopmentTeam/papirus-icon-theme"
+CURSORTHEME="elementary-instantos"
+
 GTKFONT="Cantarell 10,g:Cantarell"
 
 DGTKTHEME="Arc-Dark"
 DGTKICONS="Papirus-dark"
 
-CURSORTHEME="elementary-instantos"
