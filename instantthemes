@@ -77,7 +77,11 @@ installgtktheme() {
     fi
 
     cd temptheme || exit
-    ./install.sh
+    if [ -e ./install.sh ]; then
+        ./install.sh
+    elif [ -e ./Install.sh ]; then
+        ./install.sh
+    fi
     rm -rf /tmp/instantostemptheme
     popd || exit 1
 }
