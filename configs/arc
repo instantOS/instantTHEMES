@@ -5,6 +5,7 @@ GTKTHEME="Arc"
 GTKICONS="Papirus,PapirusDevelopmentTeam/papirus-icon-theme"
 GTKFONT="Cantarell 10,g:Cantarell"
 
-DGTKTHEME=Arc-Dark
-DGTKICONS=Papirus-dark
-CURSORTHEME=elementary-instantos
+DGTKTHEME="Arc-Dark"
+DGTKICONS="Papirus-dark"
+
+CURSORTHEME="elementary-instantos"
