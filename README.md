@@ -21,6 +21,7 @@ GTKTHEME="Arc"
 GTKICONS="Papirus"
 
 # Cursor theme, set in xresources and for gtk
+# optionally gets installed from https://github.com/paperbenni/cursors.git
 CURSORTHEME="elementary-instantos"
 
 # Font used for Gtk and various other apps
@@ -44,6 +45,14 @@ ROFITHEME=arc
 DUNSTTHEME=arc
 
 ```
+
+### Font format
+
+```sh
+GTKFONT=fontname,fontsource
+```
+
+fontsource with g:familyname downloads a font from google fonts
 
 --------
 
