@@ -5,7 +5,7 @@
 ## Aims to configure as much applications as possible to conform to the theme ##
 ################################################################################
 
-cd
+cd || exit 1
 source /usr/share/paperbash/import.sh
 
 pb git
@@ -13,6 +13,7 @@ pb config
 pb gtk
 pb instantos
 
+# default applytheme to arc
 if [ -n "$2" ]; then
     APPLYTHEME=$2
 else
@@ -24,17 +25,8 @@ else
     fi
 fi
 
-source /usr/share/instantthemes/$APPLYTHEME.sh
-ACTION=${1:-apply}
-
-tapply() {
-    echo "applying $APPLYTHEME theme"
-    instanttheme "$APPLYTHEME"
-    themeapply
-    # some things result in empty lines in xresources
-    sed -i 's/\\n//g' ~/.Xresources
-    instantdpi
-}
+source /usr/share/instantthemes/"$APPLYTHEME".sh
+ACTION="${1:-apply}"
 
 installfont() {
     convert -list font | grep -iq "$1" && return
@@ -43,6 +35,7 @@ installfont() {
     pushd .
     cd /tmp/instantosfonts/"$1" || exit
 
+    notify-send "installing font $1"
     case "$2" in
     google)
         wget -qO font.zip "https://fonts.google.com/download?family=$3"
@@ -58,17 +51,17 @@ installfont() {
     esac
 
     mv ./* ~/.local/share/fonts
-    popd
+    popd || exit 1
 
     rm -rf /tmp/instantosfonts
 
 }
 
-# installs a theme from git
-# installtheme themename themerepo
+# installs a theme or icon set from git
+# installgtktheme themename themerepo
 # theme needs to be installable as a normal user with an install.sh script
 
-installtheme() {
+installgtktheme() {
     if themeexists "$1" &>/dev/null; then
         return
     fi
@@ -76,6 +69,7 @@ installtheme() {
     mkdir -p /tmp/instantostemptheme
     pushd .
     cd /tmp/instantostemptheme || exit 1
+    notify-send "installing gtk theme $1"
     if grep -q '://' <<<"$2"; then
         git clone --depth=1 "$2" temptheme
     else
@@ -83,15 +77,21 @@ installtheme() {
     fi
 
     cd temptheme || exit
-    ./install.sh
+    if [ -e ./install.sh ]; then
+        ./install.sh
+    elif [ -e ./Install.sh ]; then
+        ./install.sh
+    fi
     rm -rf /tmp/instantostemptheme
     popd || exit 1
 }
 
-readtheme() {
+# read out config variables and default to others if not set
+themenames() {
     source /usr/share/instantthemes/config/"$1"
     PAPIRUSICONS="Papirus,PapirusDevelopmentTeam/papirus-icon-theme"
 
+    # check for values, do defaults instead
     GTKTHEME="${GTKTHEME:-Arc}"
     DGTKTHEME="${DGTKTHEME:-$GTKTHEME}"
     GTKICONS="${GTKICONS:-$PAPIRUSICONS}"
@@ -103,12 +103,22 @@ readtheme() {
     DUNSTTHEME="${DUNSTTHEME:-$THEMENAME}"
 
     GTKFONT="${GTKFONT:-Calibre 10}"
+}
 
+# check if theme is installed
+installtheme() {
+
+    themenames "$1"
+
+    # todo: install termfont
+    # ensure font is installed
     if grep -q ',' <<<"$GTKFONT"; then
         GTKFONTNAME="$(echo "$GTKFONT" | grep -o '^[^,]*')"
         GTKFONTSOURCE="$(echo "$GTKFONT" | grep -o '[^,]*$')"
         if grep -q 'g:' <<<"$GTKFONTSOURCE"; then
             installfont google "$(grep -o '[^:]*$')"
+        elif grep -q 's:' <<<"$GTKFONTSOURCE"; then
+            installfont script "$(grep -o '[^:]*$')"
         elif grep -q 'm:' <<<"$GTKFONTSOURCE"; then
             /usr/share/instantthemes/scrips/"$(sed 's/^..//g' <<<"$GTKFONTSOURCE")"
         fi
@@ -116,27 +126,34 @@ readtheme() {
         GTKFONTNAME="$GTKFONT"
     fi
 
+    # ensure theme is there
     if grep -q ',' <<<"$GTKTHEME"; then
         GTKTHEMENAME="$(echo "$GTKTHEME" | grep -o '^[^,]*')"
-        installtheme "$GTKTHEMENAME" "$(echo "$GTKTHEME" | grep -o '[^,]*$')"
+        installgtktheme "$GTKTHEMENAME" "$(echo "$GTKTHEME" | grep -o '[^,]*$')"
     else
         GTKTHEMENAME="$GTKTHEME"
     fi
 
     if grep -q ',' <<<"$GTKICONS"; then
         GTKICONNAME="$(echo "$GTKICONS" | grep -o '^[^,]*')"
-        installtheme "$GTKICONNAME" "$(echo "$GTKICONS" | grep -o '[^,]*$')"
+        installgtktheme "$GTKICONNAME" "$(echo "$GTKICONS" | grep -o '[^,]*$')"
     else
         GTKICONNAME="$GTKICONS"
+    fi
+
+    # fetch cursor if not preinstalled and not existing
+    if ! grep -q 'elementary' <<<"$CURSORTHEME"; then
+        if ! [ -e ~/.icons/"$CURSORTHEME" ]; then
+            papercursor "$CURSORTHEME"
+        fi
     fi
 
     setcursor "$CURSORTHEME"
     rofitheme "$ROFITHEME"
     dunsttheme "$DUNSTTHEME"
     xtheme "$XTHEME"
-    # TODO: auto install fonts #
-    gtkfont "$GTKFONT"
-
+    gtkfont "$GTKFONTNAME"
+    # gtk theme and gtk icons are done seperately
 }
 
 lighttheme() {
@@ -149,31 +166,25 @@ darktheme() {
     gtktheme "$DGTKTHEME"
 }
 
+tapply() {
+    echo "applying $APPLYTHEME theme"
+    readtheme "$APPLYTHEME"
+    # some things result in empty lines in xresources
+    sed -i 's/\\n//g' ~/.Xresources
+    instantdpi
+}
+
 case "$ACTION" in
-a)
-    tapply
+a*)
+    installtheme "$APPLYTHEME"
     ;;
-f)
-    themefetch
+d*)
+    themenames
+    darktheme
     ;;
-d)
-    if command -v darktheme; then
-        darktheme
-        exit
-    else
-        echo "no dark theme available for $APPLYTHEME"
-    fi
+l*)
+    themenames
+    lighttheme
     ;;
-l)
-    if command -v lighttheme; then
-        lighttheme
-        exit
-    else
-        echo "no light theme available for $APPLYTHEME"
-    fi
-    ;;
-*)
-    themefetch
-    tapply
-    ;;
+
 esac

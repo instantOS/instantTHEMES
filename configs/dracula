@@ -2,7 +2,7 @@
 
 THEMENAME=dracula
 
-GTKTHEME="materiacula,paprebenni/materiacula"
+GTKTHEME="materiacula,paperbenni/materiacula"
 GTKICONS="materiacula"
 GTKFONT="Roboto 10,g:Roboto"
 CURSORTHEME=paper-instantos

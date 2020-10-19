@@ -4,20 +4,56 @@
     <img width="300" height="300" src="https://raw.githubusercontent.com/instantOS/instantLOGO/master/png/theme.png">
 </div>
 
-instantTHEMES is a utility to provide theming for isntantOS
-it includes
+# instantTHEMES
 
--   cursor theme (gtk and xorg)
--   gtk theme
--   qt theme
--   xresources
--   dunst theme
--   fonts
--   icon theme
--   a light and dark version
+## Theme format
 
-it is used by instantOS in the background and is probably of little use outside of that
-It depends on paperbash to work. 
+```sh
+# name under which the theme is being referred to in config
+THEMENAME=arc
+
+# Default gtk theme, used for light mode and if no dark variant is present also
+# for dark mode
+GTKTHEME="Arc"
+
+# Default gtk icons, used for light mode and if no dark variant is present also
+# for dark mode
+GTKICONS="Papirus"
+
+# Cursor theme, set in xresources and for gtk
+# optionally gets installed from https://github.com/paperbenni/cursors.git
+CURSORTHEME="elementary-instantos"
+
+# Font used for Gtk and various other apps
+GTKFONT="Cantarell 10,g:Cantarell"
+
+# Dark variants of GTKICONS and GTKTHEME
+# are activated with dark mode
+DGTKTHEME="Arc-Dark"
+DGTKICONS="Papirus-dark"
+
+# name of the xresources file from the repo
+# defaults to $THEMENAME
+XTHEME=arc
+
+# name of the rofi theme from the repo
+# defaults to $THEMENAME
+ROFITHEME=arc
+
+# name of the dunst theme from the repo
+# defaults to $THEMENAME
+DUNSTTHEME=arc
+
+```
+
+### Font format
+
+```sh
+GTKFONT=fontname,fontsource
+```
+
+fontsource with g:familyname downloads a font from google fonts
 
 --------
+
 ### instantOS is still in early beta, contributions always welcome
