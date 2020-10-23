@@ -13,17 +13,12 @@ pb config
 pb gtk
 pb instantos
 
-# default applytheme to arc
-if [ -n "$2" ]; then
-    APPLYTHEME=$2
-else
-    if [ -e ~/instantos/themes/config ]; then
-        APPLYTHEME=$(cat ~/instantos/themes/config)
-    else
-        echo "using default theme"
-        APPLYTHEME="arc"
-    fi
+if ! iconf theme
+then
+    iconf theme arc
 fi
+
+APPLYTHEME="$(iconf theme)"
 
 source /usr/share/instantthemes/"$APPLYTHEME".sh
 ACTION="${1:-apply}"
