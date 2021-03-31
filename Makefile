@@ -1,6 +1,5 @@
 export PREFIX := /usr/
 
-SUBDIRS := utils/ data/default/
 SUBDIRS := colors/ configs/ dunst/ scripts/ utils/ xresources/
 
 .PHONY: all
@@ -13,6 +12,7 @@ $(SUBDIRS):
 	$(MAKE) install -C $@
 
 .PHONY: install
+
 install: instantthemes $(SUBDIRS)
 	$(info "INFO: install PREFIX: $(PREFIX)")
 	mkdir -p $(DESTDIR)$(PREFIX)share/instantthemes $(DESTDIR)$(PREFIX)share/applications/
