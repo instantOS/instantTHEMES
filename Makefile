@@ -1,21 +1,21 @@
 export PREFIX := /usr/
 
-SUBDIRS := colors/ configs/ dunst/ scripts/ utils/ xresources/
-
 .PHONY: all
 all:
 	$(info Usage: make install [PREFIX=/usr/])
 	true
 
-.PHONY: $(SUBDIRS)
-$(SUBDIRS):
-	$(MAKE) install -C $@
-
 .PHONY: install
 
-install: instantthemes $(SUBDIRS)
+install: instantthemes
 	$(info "INFO: install PREFIX: $(PREFIX)")
-	mkdir -p $(DESTDIR)$(PREFIX)share/instantthemes $(DESTDIR)$(PREFIX)share/applications/
+	mkdir -p $(DESTDIR)$(PREFIX)share/instantthemes
+	cp -r colors $(DESTDIR)$(PREFIX)share/instantthemes/colors
+	cp -r configs $(DESTDIR)$(PREFIX)share/instantthemes/configs
+	cp -r dunst $(DESTDIR)$(PREFIX)share/instantthemes/dunst
+	cp -r scripts $(DESTDIR)$(PREFIX)share/instantthemes/scripts
+	cp -r utils $(DESTDIR)$(PREFIX)share/instantthemes/utils
+	cp -r xresources $(DESTDIR)$(PREFIX)share/instantthemes/xresources
 	install -Dm 755 instantthemes $(DESTDIR)$(PREFIX)bin/instantthemes
 
 .PHONY: uninstall
