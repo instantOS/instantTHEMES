@@ -18,6 +18,12 @@ Heavily work in progress
 - urls for xresources etc
 - urls for dunst config
 
+## Theme TODO
+
+- Xresources
+  - instantWM
+  - instantMENU
+
 --------
 
 ### instantOS is still in early beta, contributions always welcome

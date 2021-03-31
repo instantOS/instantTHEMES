@@ -15,14 +15,6 @@ APPLYTHEME="$(iconf theme:arc)"
 
 ACTION="${1:-apply}"
 
-# installs font for user
-# pulls from google font or fetch scripts
-
-# installs a theme or icon set from git
-# installgtktheme themename themerepo
-# theme needs to be installable as a normal user with an install.sh script
-
-# check if theme is installed
 installtheme() {
 
     echo "installing theme $(tparse name)"
@@ -48,13 +40,14 @@ installtheme() {
             papercursor "$CURSORTHEME"
         fi
     fi
+}
 
-    setcursor "$CURSORTHEME"
-    rofitheme "$ROFITHEME"
-    dunsttheme "$DUNSTTHEME"
-    xtheme "$XTHEME"
-    gtkfont "$GTKFONTNAME"
-    # gtk theme and gtk icons are done seperately
+applytheme() {
+    setcursor "$(tparse cursor)"
+    rofitheme "$(tparse name)"
+    dunsttheme "$(tparse name)"
+    setxtheme "$(tparse name)"
+    gtkfont "$(tparse gtk.font.name)"
 }
 
 lighttheme() {
@@ -73,7 +66,6 @@ tapply() {
     readtheme "$APPLYTHEME"
     # some things result in empty lines in xresources
     sed -i 's/\\n//g' ~/.Xresources
-    instantdpi
 }
 
 case "$ACTION" in
