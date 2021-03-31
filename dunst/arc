@@ -1,15 +1,18 @@
-[base16_low]
-	msg_urgency = low
-	background = "#292f3a"
-	foreground = "#5294E2"
+[urgency_low]
+    background = "#292F3A"
+    foreground = "#FFFFFF"
+    frame_color = "#52E067"
+    timeout = 5
 
-[base16_normal]
-	msg_urgency = normal
-	background = "#292f3a"
-	foreground = "#ffffff"
+[urgency_normal]
+    background = "#292F3A"
+    foreground = "#FFFFFF"
+    frame_color = "#5293E1"
+    timeout = 10
 
-[base16_critical]
-	msg_urgency = critical
-	background = "#5294E2"
-	foreground = "#ffffff"
+[urgency_critical]
+    background = "#292F3A"
+    foreground = "#FFFFFF"
+    frame_color = "#E0527E"
+    timeout = 0
 
