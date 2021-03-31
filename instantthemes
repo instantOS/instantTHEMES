@@ -7,18 +7,7 @@
 
 source /usr/share/instantthemes/utils/functions.sh || exit 1
 
-# start todo: remove
-cd || exit 1
-source /usr/share/paperbash/import.sh
-
-pb git
-pb config
-pb gtk
-pb instantos
-# start todo: remove
-
-if ! iconf theme
-then
+if ! iconf theme; then
     iconf theme arc
 fi
 
@@ -26,120 +15,31 @@ APPLYTHEME="$(iconf theme:arc)"
 
 ACTION="${1:-apply}"
 
-
 # installs font for user
 # pulls from google font or fetch scripts
-installfont() {
-    convert -list font | grep -iq "$1" && return
-    mkdir -p ~/.local/share/fonts &>/dev/null
-    mkdir -p /tmp/instantosfonts/"$1" || exit 1
-    pushd .
-    cd /tmp/instantosfonts/"$1" || exit
-
-    notify-send "installing font $1"
-    case "$2" in
-    google)
-        wget -qO font.zip "https://fonts.google.com/download?family=$3"
-        unzip font.zip
-        rm LICENSE.txt
-        rm font.zip
-        ;;
-    script)
-        if [ -e /usr/share/instantthemes/scripts/"$3".sh ]; then
-            /usr/share/instantthemes/scripts/"$3".sh
-        fi
-        ;;
-    esac
-
-    mv ./* ~/.local/share/fonts
-    popd || exit 1
-
-    rm -rf /tmp/instantosfonts
-
-}
 
 # installs a theme or icon set from git
 # installgtktheme themename themerepo
 # theme needs to be installable as a normal user with an install.sh script
 
-installgtktheme() {
-    if themeexists "$1" &>/dev/null; then
-        return
-    fi
-
-    mkdir -p /tmp/instantostemptheme
-    pushd .
-    cd /tmp/instantostemptheme || exit 1
-    notify-send "installing gtk theme $1"
-    if grep -q '://' <<<"$2"; then
-        git clone --depth=1 "$2" temptheme
-    else
-        git clone --depth=1 "https://github.com/$2" temptheme
-    fi
-
-    cd temptheme || exit
-    if [ -e ./install.sh ]; then
-        ./install.sh
-    elif [ -e ./Install.sh ]; then
-        ./install.sh
-    fi
-    rm -rf /tmp/instantostemptheme
-    popd || exit 1
-}
-
-# read out config variables and default to others if not set
-themenames() {
-    source /usr/share/instantthemes/config/"$1" || exit 1
-    PAPIRUSICONS="Papirus,PapirusDevelopmentTeam/papirus-icon-theme"
-
-    # check for values, do defaults instead
-    GTKTHEME="${GTKTHEME:-Arc}"
-    DGTKTHEME="${DGTKTHEME:-$GTKTHEME}"
-    GTKICONS="${GTKICONS:-$PAPIRUSICONS}"
-    DGTKICONS="${DGTKICONS:-$DGTKICONS}"
-
-    ROFITHEME="${ROFITHEME:-$THEMENAME}"
-    CURSORTHEME=${CURSORTHEME:-elementary-instantos}
-    XTHEME="${XTHEME:-$THEMENAME}"
-    DUNSTTHEME="${DUNSTTHEME:-$THEMENAME}"
-
-    GTKFONT="${GTKFONT:-Calibre 10}"
-}
-
 # check if theme is installed
 installtheme() {
 
-    themenames "$1"
+    echo "installing theme $(tparse name)"
 
-    # todo: install termfont
-    # ensure font is installed
-    if grep -q ',' <<<"$GTKFONT"; then
-        GTKFONTNAME="$(echo "$GTKFONT" | grep -o '^[^,]*')"
-        GTKFONTSOURCE="$(echo "$GTKFONT" | grep -o '[^,]*$')"
-        if grep -q 'g:' <<<"$GTKFONTSOURCE"; then
-            installfont google "$(grep -o '[^:]*$')"
-        elif grep -q 's:' <<<"$GTKFONTSOURCE"; then
-            installfont script "$(grep -o '[^:]*$')"
-        elif grep -q 'm:' <<<"$GTKFONTSOURCE"; then
-            /usr/share/instantthemes/scrips/"$(sed 's/^..//g' <<<"$GTKFONTSOURCE")"
+    if tparse q gtk; then
+        installfont gtk
+        if tparse gtk.theme.name && ! themeexists "$(gtk.theme.name)"; then
+            installgtktheme gtk.theme
         fi
-    else
-        GTKFONTNAME="$GTKFONT"
+
+        if tparse gtk.icons.name && ! themeexists "$(gtk.icons.name)"; then
+            installgtktheme gtk.icons
+        fi
     fi
 
-    # ensure theme is there
-    if grep -q ',' <<<"$GTKTHEME"; then
-        GTKTHEMENAME="$(echo "$GTKTHEME" | grep -o '^[^,]*')"
-        installgtktheme "$GTKTHEMENAME" "$(echo "$GTKTHEME" | grep -o '[^,]*$')"
-    else
-        GTKTHEMENAME="$GTKTHEME"
-    fi
-
-    if grep -q ',' <<<"$GTKICONS"; then
-        GTKICONNAME="$(echo "$GTKICONS" | grep -o '^[^,]*')"
-        installgtktheme "$GTKICONNAME" "$(echo "$GTKICONS" | grep -o '[^,]*$')"
-    else
-        GTKICONNAME="$GTKICONS"
+    if tparse q terminal; then
+        installfont terminal
     fi
 
     # fetch cursor if not preinstalled and not existing
@@ -158,13 +58,14 @@ installtheme() {
 }
 
 lighttheme() {
-    gtkicons "$GTKICONS"
-    gtktheme "$GTKTHEME"
+    gtkicons "$(tparse gtk.icons.name)"
+    gtktheme "$(tparse gtk.theme.name)"
 }
 
 darktheme() {
-    gtkicons "$DGTKICONS"
-    gtktheme "$DGTKTHEME"
+    tparse q gtk.dark || return
+    setgtkicons "$(tparse gtk.dark.icons)"
+    setgtktheme "$(tparse gtk.dark.theme)"
 }
 
 tapply() {

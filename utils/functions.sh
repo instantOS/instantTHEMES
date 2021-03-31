@@ -6,6 +6,108 @@ DOTRAW="https://raw.githubusercontent.com/instantos/dotfiles/master"
 
 ### general utilities ###
 
+tparse() {
+    if [ "$1" = "q" ]; then
+        shift 1
+        yq ".theme.${1}" <"$THEMEFILE" &>/dev/null || return 1
+    else
+        yq ".theme.${1}" <"$THEMEFILE" &>/dev/null || return 1
+    fi
+}
+
+######################
+### Font utilities ###
+######################
+
+listtermfonts() {
+    fc-list -f "%{family} : %{file}\n" :spacing=100 | sort | less
+}
+
+fontexists() {
+    if convert -list font | grep -iq "$1"; then
+        echo "font $1 exists"
+        return 0
+    else
+        echo "font $1 not found"
+        return 1
+    fi
+}
+
+# set gtk font
+gtkfont() {
+
+    # check for / create gtk 3 settings
+    gtk3settings
+    # set gtk3 settings
+    if grep -q 'gtk-font-name' ~/.config/gtk-3.0/settings.ini; then
+        sed -i 's/gtk-font-name=.*/gtk-font-name='"$1"'/g' ~/.config/gtk-3.0/settings.ini
+    else
+        echo "gtk-font-name=$1" >>~/.config/gtk-3.0/settings.ini
+    fi
+
+    if grep -q 'gtk-font-name' ~/.gtkrc-2.0; then
+        sed -i 's/gtk-font-name =.*/gtk-font-name = "'"$1"'"/g' ~/.gtkrc-2.0
+    else
+        echo 'gtk-font-name = "'"$1"'"' >>~/.gtkrc-2.0
+    fi
+
+}
+
+gtkdocumentfont() {
+    dconf write '/org/mate/desktop/interface/document-font-name' "'$1'"
+}
+
+checkfont() {
+    if convert -list font | grep -iq "$1"; then
+        echo "font $1 is installed"
+        return 0
+    else
+        echo "font $1 not found"
+        return 1
+    fi
+}
+
+installfont() {
+    if tparse q "$1".font.name && ! fontexists "$(tparse "$1".font.name)"; then
+        if tparse q "$1".font.googlesource; then
+            fetchfont google "$(tparse "$1".font.googlesource)"
+        elif tparse q "$1".font.scriptsource; then
+            fetchfont script "$(tparse "$1".font.scriptsource)"
+        fi
+    fi
+}
+
+fetchfont() {
+    mkdir -p ~/.local/share/fonts &>/dev/null
+    mkdir -p /tmp/instantosfonts/"$1"
+    cd /tmp/instantosfonts/"$1" || return 1
+
+    echo "downloading font $1"
+    # TODO: other sources
+    case "$2" in
+    google)
+        wget -qO font.zip "https://fonts.google.com/download?family=$3"
+        unzip font.zip
+        rm LICENSE.txt
+        rm font.zip
+        ;;
+    script)
+        if [ -e /usr/share/instantthemes/scripts/"$3".sh ]; then
+            /usr/share/instantthemes/scripts/"$3".sh
+        fi
+        ;;
+    esac
+
+    mv ./* ~/.local/share/fonts
+    popd || exit 1
+
+    rm -rf /tmp/instantosfonts
+}
+
+###########################
+### GTK theme utilities ###
+###########################
+
 # initializes gtk3 config files
 gtk3settings() {
     if ! [ -e ~/.config/gtk-3.0/settings.ini ]; then
@@ -23,7 +125,6 @@ gtk3settings() {
 }
 
 # checks if either a theme or icon set exists in folder $1
-
 gtkloop() {
     cd "$1" || exit
     echo "$1"
@@ -34,10 +135,9 @@ gtkloop() {
     return 1
 }
 
-#### Theme utilities ####
-
-gtktheme() {
+setgtktheme() {
     gtk3settings
+    [ -z "$1" ] && return
     # set gtk3 settings
     if [ -e ~/.config/gtk-3.0/settings.ini ] && grep -q 'gtk-theme-name' ~/.config/gtk-3.0/settings.ini; then
         if grep -q "gtk-theme-name=$1$" ~/.config/gtk-3.0/settings.ini; then
@@ -70,10 +170,40 @@ themeexists() {
     fi
 }
 
+installgtktheme() {
+    if tparse "$1".pacmansource; then
+        instantinstall "$("$1".pacmansource)"
+    elif tparse q "$1".gitsource; then
+        THEMEGITSOURCE="$(tparse "$1".gitsource)"
+
+        mkdir -p /tmp/instantostemptheme
+        cd /tmp/instantostemptheme || return 1
+        notify-send "installing gtk theme $1"
+
+        if grep -q '://' <<<"$THEMEGITSOURCE"; then
+            # full link
+            git clone --depth=1 "$THEMEGITSOURCE" temptheme
+        else
+            # default to github
+            git clone --depth=1 "https://github.com/$THEMEGITSOURCE" temptheme
+        fi
+
+        cd temptheme || return 1
+        if [ -e ./install.sh ]; then
+            ./install.sh
+        elif [ -e ./Install.sh ]; then
+            ./install.sh
+        fi
+        rm -rf /tmp/instantostemptheme
+    fi
+
+}
+
+
 ### Icon set utilities ###
 # set gtk icon theme
-gtkicons() {
-
+setgtkicons() {
+    [ -z "$1" ] && return
     if [ -e ~/.config/qt5ct/qt5ct.conf ]; then
         if grep -q "icon_theme=$1$" ~/.config/qt5ct/qt5ct.conf; then
             echo "qt icons already applied"
@@ -121,54 +251,6 @@ icons_exist() {
 
 ### font utilities ###
 
-listtermfonts() {
-    fc-list -f "%{family} : %{file}\n" :spacing=100 | sort | less
-}
-
-fontexists() {
-    if convert -list font | grep -iq "$1"; then
-        echo "font $1 exists"
-        return 0
-    else
-        echo "font $1 not found"
-        return 1
-    fi
-}
-
-installfont() {
-    [ -n "$2" ] && fontexists "$2" && return 0
-
-    if [ -e ~/.local/share/fonts/"${1##*/}" ]; then
-        echo "font file conflict"
-        return 1
-    fi
-    mv "$1" ~/.local/share/fonts/
-    echo "installed font $1"
-}
-
-# set gtk font
-gtkfont() {
-
-    # check for / create gtk 3 settings
-    gtk3settings
-    # set gtk3 settings
-    if grep -q 'gtk-font-name' ~/.config/gtk-3.0/settings.ini; then
-        sed -i 's/gtk-font-name=.*/gtk-font-name='"$1"'/g' ~/.config/gtk-3.0/settings.ini
-    else
-        echo "gtk-font-name=$1" >>~/.config/gtk-3.0/settings.ini
-    fi
-
-    if grep -q 'gtk-font-name' ~/.gtkrc-2.0; then
-        sed -i 's/gtk-font-name =.*/gtk-font-name = "'"$1"'"/g' ~/.gtkrc-2.0
-    else
-        echo 'gtk-font-name = "'"$1"'"' >>~/.gtkrc-2.0
-    fi
-
-}
-
-gtkdocumentfont() {
-    dconf write '/org/mate/desktop/interface/document-font-name' "'$1'"
-}
 
 # install cursor from github
 papercursor() {

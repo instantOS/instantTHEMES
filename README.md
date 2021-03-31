@@ -6,53 +6,17 @@
 
 # instantTHEMES
 
-## Theme format
+Declarative theming engine for the entire OS  
+Heavily work in progress
 
-```sh
-# name under which the theme is being referred to in config
-THEMENAME=arc
+## Planned features
 
-# Default gtk theme, used for light mode and if no dark variant is present also
-# for dark mode
-GTKTHEME="Arc"
-
-# Default gtk icons, used for light mode and if no dark variant is present also
-# for dark mode
-GTKICONS="Papirus"
-
-# Cursor theme, set in xresources and for gtk
-# optionally gets installed from https://github.com/paperbenni/cursors.git
-CURSORTHEME="elementary-instantos"
-
-# Font used for Gtk and various other apps
-GTKFONT="Cantarell 10,g:Cantarell"
-
-# Dark variants of GTKICONS and GTKTHEME
-# are activated with dark mode
-DGTKTHEME="Arc-Dark"
-DGTKICONS="Papirus-dark"
-
-# name of the xresources file from the repo
-# defaults to $THEMENAME
-XTHEME=arc
-
-# name of the rofi theme from the repo
-# defaults to $THEMENAME
-ROFITHEME=arc
-
-# name of the dunst theme from the repo
-# defaults to $THEMENAME
-DUNSTTHEME=arc
-
-```
-
-### Font format
-
-```sh
-GTKFONT=fontname,fontsource
-```
-
-fontsource with g:familyname downloads a font from google fonts
+- QT theme
+- QT icons
+- GTK 4 theme
+- GTK 4 icons
+- urls for xresources etc
+- urls for dunst config
 
 --------
 
