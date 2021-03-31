@@ -1,0 +1,13 @@
+---
+theme:
+    name: dracula
+    cursor: paper-instantos
+    gtk:
+        font:
+            name: Roboto 10
+            googlesource: Roboto
+        icons:
+            name: materiacula
+        theme:
+            name: materiacula
+            gitsource: paperbenni/materiacula

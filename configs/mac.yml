@@ -1,0 +1,19 @@
+---
+theme:
+    name: mac
+    cursor: osx-instantos
+    gtk:
+        font:
+            name: SF Pro Display 10
+            scriptsource: sfpro
+        theme:
+            name: Mojave-light
+        icons:
+            name: McMojave-circle
+        dark:
+            theme: Mojave-dark
+            icons: McMojave-circle-dark
+    terminal:
+        font: 
+            name: monaco
+            scriptsource: monaco

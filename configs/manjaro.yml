@@ -1,0 +1,17 @@
+---
+theme:
+    name: manjaro
+    cursor: elementary-instantos
+    gtk:
+        font:
+            name: Roboto 10
+            googlesource: Roboto
+        icons:
+            name: Papirus-Maia
+            gitsource: Ste74/papirus-maia-icon-theme
+        theme:
+            name: Matcha-sea
+            gitsource: vinceliuice/matcha
+        dark:
+            theme: Matcha-dark-sea
+            icons: Papirus-Dark-Maia

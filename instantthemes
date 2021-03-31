@@ -5,6 +5,9 @@
 ## Aims to configure as much applications as possible to conform to the theme ##
 ################################################################################
 
+source /usr/share/instantthemes/utils/functions.sh || exit 1
+
+# start todo: remove
 cd || exit 1
 source /usr/share/paperbash/import.sh
 
@@ -12,17 +15,20 @@ pb git
 pb config
 pb gtk
 pb instantos
+# start todo: remove
 
 if ! iconf theme
 then
     iconf theme arc
 fi
 
-APPLYTHEME="$(iconf theme)"
+APPLYTHEME="$(iconf theme:arc)"
 
-source /usr/share/instantthemes/"$APPLYTHEME".sh
 ACTION="${1:-apply}"
 
+
+# installs font for user
+# pulls from google font or fetch scripts
 installfont() {
     convert -list font | grep -iq "$1" && return
     mkdir -p ~/.local/share/fonts &>/dev/null
@@ -83,7 +89,7 @@ installgtktheme() {
 
 # read out config variables and default to others if not set
 themenames() {
-    source /usr/share/instantthemes/config/"$1"
+    source /usr/share/instantthemes/config/"$1" || exit 1
     PAPIRUSICONS="Papirus,PapirusDevelopmentTeam/papirus-icon-theme"
 
     # check for values, do defaults instead
