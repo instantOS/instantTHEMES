@@ -5,15 +5,60 @@
 ## Aims to configure as much applications as possible to conform to the theme ##
 ################################################################################
 
-source /usr/share/instantthemes/utils/functions.sh || exit 1
+echohelp() {
+    echo 'Usage:
+    instantthemes [action] [arguments]
+Actions:
+    apply [theme]    Applies a theme
+    set [theme]      Apply theme and set as default
+    list             List all available themes
+    light/dark       switch between light and dark mode
+    help             Show this message
+    '
+    exit
 
-if ! iconf theme; then
-    iconf theme arc
+}
+if [ -z "$1" ]; then
+    echohelp
 fi
 
-APPLYTHEME="$(iconf theme:arc)"
+case $1 in
+help)
+    echohelp
+    ;;
+list)
+    echo "available themes:"
+    {
+        cd /usr/share/instantthemes/configs && ls
+        cd ~/.config/instantos/themes/ && ls
+    } | sort -u
+    exit
+    ;;
+set)
+    [ -z "$2" ] && {
+        echo "usage: instantthemes set themename"
+        exit
+    }
+    if [ -e /usr/share/instantthemes/configs/"$2" ] || [ -e "$HOME"/.config/instantos/themes/"$2" ]; then
+        iconf theme "$2"
+    else
+        echo "theme $2 does not exist"
+        instantthemes list
+        exit 1
+    fi
+    ACTION="apply"
+    ;;
+apply)
+    ACTION="apply"
+    ;;
+*)
+    echohelp
+    ;;
+esac
 
-ACTION="${1:-apply}"
+source /usr/share/instantthemes/utils/functions.sh || exit 1
+
+APPLYTHEME="$(iconf theme:arc)"
 
 installtheme() {
 
@@ -71,6 +116,7 @@ tapply() {
 case "$ACTION" in
 a*)
     installtheme "$APPLYTHEME"
+    applytheme
     ;;
 d*)
     themenames

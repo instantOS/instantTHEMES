@@ -17,6 +17,7 @@ Heavily work in progress
 - GTK 4 icons
 - urls for xresources etc
 - urls for dunst config
+- update themes
 
 ## Theme TODO
 
