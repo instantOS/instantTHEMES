@@ -1,3 +1,5 @@
+    icon_path = icon_path = /usr/share/icons/Papirus-Dark/48x48/status/:/usr/share/icons/Papirus-Dark/48x48/devices/:/usr/share/icons/Papirus-Dark/48x48/apps:/usr/share/icons/Papirus-Dark/16x16/actions
+
 [urgency_low]
     background = "#292F3A"
     foreground = "#FFFFFF"
