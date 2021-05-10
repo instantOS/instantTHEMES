@@ -22,6 +22,8 @@ if [ -z "$1" ]; then
     echohelp
 fi
 
+source /usr/share/instantthemes/utils/functions.sh || exit 1
+
 case $1 in
 help)
     echohelp
@@ -56,8 +58,6 @@ apply)
     ;;
 esac
 
-source /usr/share/instantthemes/utils/functions.sh || exit 1
-
 APPLYTHEME="$(iconf theme:arc)"
 
 installtheme() {
@@ -65,12 +65,12 @@ installtheme() {
     echo "installing theme $(tparse name)"
 
     if tparse q gtk; then
-        installfont gtk
-        if tparse gtk.theme.name && ! themeexists "$(gtk.theme.name)"; then
+        installfont gtk || return 1
+        if tparse q gtk.theme.name && ! themeexists "$(tparse gtk.theme.name)"; then
             installgtktheme gtk.theme
         fi
 
-        if tparse gtk.icons.name && ! themeexists "$(gtk.icons.name)"; then
+        if tparse q gtk.icons.name && ! icons_exist "$(tparse gtk.icons.name)"; then
             installgtktheme gtk.icons
         fi
     fi
@@ -92,7 +92,7 @@ applytheme() {
     rofitheme "$(tparse name)"
     dunsttheme "$(tparse name)"
     setxtheme "$(tparse name)"
-    gtkfont "$(tparse gtk.font.name)"
+    setgtkfont "$(tparse gtk.font.name) $(tparse gtk.font.size)"
 }
 
 lighttheme() {
@@ -115,7 +115,12 @@ tapply() {
 
 case "$ACTION" in
 a*)
-    installtheme "$APPLYTHEME"
+    THEMEFILE="/usr/share/instantthemes/configs/$APPLYTHEME.yml"
+    export THEMEFILE
+    installtheme "$APPLYTHEME" || {
+        echo 'theme installation failed'
+        exit 1
+    }
     applytheme
     ;;
 d*)

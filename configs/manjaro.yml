@@ -4,7 +4,8 @@ theme:
     cursor: elementary-instantos
     gtk:
         font:
-            name: Roboto 10
+            name: Roboto
+            size: 10
             googlesource: Roboto
         icons:
             name: Papirus-Maia

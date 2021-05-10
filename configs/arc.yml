@@ -4,7 +4,8 @@ theme:
   cursor: elementary-instantos
   gtk:
     font:
-        name: Cantarell 10
+        name: Cantarell
+        size: 10
         googlesource: Cantarell
     icons:
         name: Papirus

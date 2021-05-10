@@ -4,7 +4,8 @@ theme:
     cursor: osx-instantos
     gtk:
         font:
-            name: SF Pro Display 10
+            name: SF Pro Display
+            size: 10
             scriptsource: sfpro
         theme:
             name: Mojave-light

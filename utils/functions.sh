@@ -11,7 +11,7 @@ tparse() {
         shift 1
         yq ".theme.${1}" <"$THEMEFILE" &>/dev/null || return 1
     else
-        yq ".theme.${1}" <"$THEMEFILE" &>/dev/null || return 1
+        yq ".theme.${1}" <"$THEMEFILE" | sed 's/^"//g' | sed 's/"$//g'
     fi
 }
 
@@ -100,8 +100,12 @@ fetchfont() {
         ;;
     esac
 
+    if ! ls | grep -q '..'
+    then
+        echo 'font download failed'
+        return 1
+    fi
     mv ./* ~/.local/share/fonts
-    popd || exit 1
 
     rm -rf /tmp/instantosfonts
 }
@@ -109,9 +113,9 @@ fetchfont() {
 installfont() {
     if tparse q "$1".font.name && ! fontexists "$(tparse "$1".font.name)"; then
         if tparse q "$1".font.googlesource; then
-            fetchfont google "$(tparse "$1".font.googlesource)"
+            fetchfont google "$(tparse "$1".font.googlesource)" || return 1
         elif tparse q "$1".font.scriptsource; then
-            fetchfont script "$(tparse "$1".font.scriptsource)"
+            fetchfont script "$(tparse "$1".font.scriptsource)" || return 1
         fi
     fi
 }
@@ -173,7 +177,7 @@ themeexists() {
 
 installgtktheme() {
     if tparse "$1".pacmansource; then
-        instantinstall "$("$1".pacmansource)"
+        instantinstall "$(tparse "$1".pacmansource)"
     elif tparse q "$1".gitsource; then
         THEMEGITSOURCE="$(tparse "$1".gitsource)"
 
@@ -257,7 +261,7 @@ papercursor() {
     if ! [ -e ~/.icons/"$1" ]; then
         mkdir ~/.icons &>/dev/null
         cd ~/.icons || return 1
-        instantinstall svn || return 1
+        instantinstall subversion || return 1
         svn export "https://github.com/paperbenni/cursors.git/trunk/$1"
     fi
 }
@@ -270,10 +274,10 @@ setcursor() {
 
     {
         echo "# This file is written by instantthemes. Do not edit."
-        app "[Icon Theme]"
-        app "Name=Default"
-        app "Comment=Default Cursor Theme"
-        app "Inherits=$1"
+        echo "[Icon Theme]"
+        echo "Name=Default"
+        echo "Comment=Default Cursor Theme"
+        echo "Inherits=$1"
 
     } >~/.icons/default/index.theme
 
@@ -307,7 +311,8 @@ dunsttheme() {
     if [ -e "$DUNSTRC" ]; then
         # remove previous theme
         if grep -q instantTHEMES "$DUNSTRC"; then
-            sed -i '/^#.*instantTHEMES.*start/,/^#.*instantTHEMES.*end/d' -i dunstrc
+            echo 'removing previous dunst theme'
+            sed -i '/^#.*instantTHEMES.*start/,/^#.*instantTHEMES.*end/d' -i "$DUNSTRC"
         fi
         if grep -q '\[base16_low\]' "$DUNSTRC" && ! [ "$2" = "-f" ]; then
             echo 'theme is customized, Im not messing with that'
@@ -337,11 +342,12 @@ setxtheme() {
             return 1
         }
     else
-        if ! grep -q instantTHEMES; then
+        if ! grep -q 'instantTHEMES.*start' ~/.Xresources || ! grep -q 'instantTHEMES.*end' ~/.Xresources; then
             echo 'no instantthemes marker in xresources found, aborting to avoid overriding user configuration'
             return 1
         else
             echo 'removing previous theme'
+            # remove lines between markers
             sed -i '/^".*instantTHEMES.*start/,/^".*instantTHEMES.*end/d' -i ~/.Xresources || return 1
         fi
     fi
