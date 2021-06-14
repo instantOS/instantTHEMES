@@ -11,6 +11,8 @@
     foreground = "#FFFFFF"
     frame_color = "#5293E1"
     timeout = 10
+    highlight = "#5293E1"
+
 
 [urgency_critical]
     background = "#292F3A"

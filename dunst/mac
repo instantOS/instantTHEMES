@@ -9,6 +9,7 @@
 	msg_urgency = normal
 	background = "#fafafa"
 	foreground = "#4c4c4c"
+    highlight = "#007aff"
 
 [base16_critical]
 	msg_urgency = critical

@@ -69,16 +69,6 @@ gtkdocumentfont() {
     dconf write '/org/mate/desktop/interface/document-font-name' "'$1'"
 }
 
-checkfont() {
-    if convert -list font | grep -iq "$1"; then
-        echo "font $1 is installed"
-        return 0
-    else
-        echo "font $1 not found"
-        return 1
-    fi
-}
-
 fetchfont() {
     mkdir -p ~/.local/share/fonts &>/dev/null
     mkdir -p /tmp/instantosfonts/"$1"
