@@ -1,3 +1,6 @@
+!... all target ~/.Xresources
+!... theme begin
+!... theme hash CDC827066BB08A32678276D4F288B6BD30E0983A3B126D6ECC8B4F2C851912E1
 ! papertheme
 
 *.background: #383c4a
@@ -36,3 +39,4 @@
 *color15: #FFFFFF
 
 URxvt.font: xft:Fira Code Nerd Font Mono:size=13
+!... theme end

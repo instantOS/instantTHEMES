@@ -1,3 +1,6 @@
+!... all target ~/.Xresources
+!... theme begin
+!... theme hash 6B306119BFCD3A03689BDC6ED80625E4080553C81F4616015A22C011D4A43BE0
 ! papertheme
 ! manjaro theme
 
@@ -237,3 +240,4 @@ URxvt*font:                         Source Code Pro:size=17
 ! -xos4-terminus-bold-r-normal--24-240-72-72-c-120-iso10646-1
 ! -xos4-terminus-bold-r-normal--28-280-72-72-c-140-iso10646-1
 ! -xos4-terminus-bold-r-normal--32-320-72-72-c-160-iso10646-1
+!... theme end

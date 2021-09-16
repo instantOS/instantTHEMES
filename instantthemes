@@ -18,6 +18,7 @@ Actions:
     exit
 
 }
+
 if [ -z "$1" ]; then
     echohelp
 fi

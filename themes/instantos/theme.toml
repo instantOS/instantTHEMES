@@ -1,0 +1,29 @@
+name = "instantOS"
+defaultvariant = "light"
+dependencies = ["materia-gtk-theme", "papirus-icon-theme", "instantcursors"]
+
+[cursor]
+theme = "elementary-instantos"
+size = 16
+
+[font]
+name = "Inter"
+size = 12
+
+[icons]
+light = "Papirus"
+dark = "Papirus-Dark"
+
+[gtk]
+[gtk.light]
+theme = "Materia"
+[gtk.dark]
+theme = "Materia-dark"
+
+[qt]
+[qt.light]
+theme = "kvantum"
+[qt.dark]
+theme = "kvanum-dark"
+
+kvantum = "Materia"

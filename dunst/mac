@@ -1,3 +1,6 @@
+#... all target ~/.config/dunst/dunstrc
+#... theme begin
+#... theme hash E86B6DD33F4C938870DD5E1EF0B5E2534293CAC4180DD18CDE163F69883F3FAD
     icon_path = icon_path = /usr/share/icons/Papirus-Dark/48x48/status/:/usr/share/icons/Papirus-Dark/48x48/devices/:/usr/share/icons/Papirus-Dark/48x48/apps:/usr/share/icons/Papirus-Dark/16x16/actions
 
 [base16_low]
@@ -16,3 +19,4 @@
 	background = "#007aff"
 	foreground = "#fafafa"
 
+#... theme end

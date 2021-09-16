@@ -7,7 +7,11 @@ all:
 
 .PHONY: install
 
-install: instantthemes
+imosid:
+	find -regex './dunst/.*' -exec imosid compile "{}" \;
+	find -regex './xresources/.*' -exec imosid compile "{}" \;
+
+install: instantthemes build
 	$(info "INFO: install PREFIX: $(PREFIX)")
 	mkdir -p $(DESTDIR)$(PREFIX)share/instantthemes
 	cp -r colors $(DESTDIR)$(PREFIX)share/instantthemes/colors
