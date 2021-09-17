@@ -85,16 +85,70 @@ applytheme() {
     setgtktheme "$(d gtk."$VARIANT".theme)"
 
     # TODO: qt theme
+    # TODO: wallpaper
+
+    if [ -e ./dotfiles ]; then
+        pushd dotfiles || exit 1
+        [ -e ./"$VARIANT" ] && imosid apply ./"$VARIANT"
+        [ -e ./multi/ ] && imosid apply ./multi
+        popd || exit 1
+    fi
+
+}
+
+# parse argument string into directory location of theme root
+gettheme() {
+    # locally installed theme
+    if [ -e ~/.config/instantos/themes/"$1"/theme.toml ]; then
+        realpath ~/.config/instantos/themes/"$1"
+        return
+    fi
+
+    if [ -e "$1"/theme.toml ]; then
+        realpath "$1"
+        return
+    fi
+
+    # TODO: archive support
+    # TODO: https download support
+    # TODO: ipfs download support
+
+    export GIT_ASKPASS="instantthemes"
+    if git ls-remote --exit-code "$1" &>/dev/null; then
+        pushd ~/.config/instantos/themes || exit 1
+        git clone "$1" &>/dev/null || return 1
+        [ -e "$(basename "$1")/theme.toml" ] || return 1
+        realpath "$(basename "$1")"
+        popd || exit 1
+    fi
+
+    if [ -e /usr/share/instantthemes/themes/"$1"/theme.toml ]; then
+        echo /usr/share/instantthemes/themes/"$1"
+    fi
+
+    # TODO: version detection/update theme
 
 }
 
 case $1 in
-help)
-    echohelp
+apply)
+    echo "TODO: apply"
+    ;;
+init)
+    echo "TODO: theme creation wizard"
+    ;;
+status)
+    echo "TODO: status"
+    ;;
+variant)
+    echo "TODO: variant"
+    echo 'dark/light/auto'
     ;;
 install)
     shift 1
     installtheme "$1"
     ;;
-
+help)
+    echohelp
+    ;;
 esac
