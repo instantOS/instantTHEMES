@@ -1,4 +1,5 @@
 name = "instantOS"
+version = 0
 defaultvariant = "light"
 dependencies = ["materia-gtk-theme", "papirus-icon-theme", "instantcursors"]
 

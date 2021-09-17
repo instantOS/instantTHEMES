@@ -62,6 +62,7 @@ setgtkfont() {
     else
         echo 'gtk-font-name = "'"$1"'"' >>~/.gtkrc-2.0
     fi
+    # TODO: gtk 4
 
 }
 
@@ -90,8 +91,7 @@ fetchfont() {
         ;;
     esac
 
-    if ! ls | grep -q '..'
-    then
+    if ! ls | grep -q '..'; then
         echo 'font download failed'
         return 1
     fi
@@ -280,6 +280,31 @@ setcursor() {
 Xcursor.theme: $1" >>~/.Xresources
         fi
     fi
+}
+
+######################
+# QT theme utilities #
+######################
+
+setqttheme() {
+    [ -z "$1" ] && return
+    [ -e ~/.config/qt5ct/qt5ct.conf ] || return 1
+    sed 's/^style=.*/style='"$1"'/g'
+}
+
+kvantumsettings() {
+    [ -e ~/.config/Kvantum/kvantum.kvconfig ] || return
+    mkdir -p ~/.config/Kvantum
+    {
+        echo '[General]'
+        echo 'theme=Breeze'
+    } >~/.config/Kvantum/kvantum.kvconfig
+}
+
+setkvantumtheme() {
+    [ -z "$1" ] && return
+    kvantumsettings
+    sed -i 's/^theme=*/theme='"$1"'/g' ~/.config/Kvantum/kvantum.kvconfig
 }
 
 # copies a rofi theme config
