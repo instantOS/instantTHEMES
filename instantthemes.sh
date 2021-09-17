@@ -132,7 +132,8 @@ gettheme() {
 
 case $1 in
 apply)
-    echo "TODO: apply"
+    # TODO: variant stuff
+    applytheme "$(gettheme "$2")"
     ;;
 init)
     echo "TODO: theme creation wizard"
@@ -146,7 +147,7 @@ variant)
     ;;
 install)
     shift 1
-    installtheme "$1"
+    installtheme "$(gettheme "$2")"
     ;;
 help)
     echohelp
