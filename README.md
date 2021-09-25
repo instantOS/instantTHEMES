@@ -96,4 +96,12 @@ kvantum = "Materia"
 
 --------
 
+## Dependencies
+
+bash
+git
+curl
+imosid
+atool
+
 ### instantOS is still in early beta, contributions always welcome

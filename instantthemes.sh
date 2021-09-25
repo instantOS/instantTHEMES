@@ -59,8 +59,6 @@ installtheme() {
         installfolder themes themes themes
         installfolder fonts .local/share/fonts fonts && fc-cache -fv
         # TODO: wallpapers
-        # TODO: qt themes
-        # TODO: kvantum themes
 
         popd || exit 1
     fi
@@ -100,7 +98,7 @@ applytheme() {
 gettheme() {
     # locally installed theme
     if [ -e ~/.config/instantos/themes/"$1"/theme.toml ]; then
-        realpath ~/.config/instantos/themes/"$1"
+        THEMERETURNPATH="$(realpath ~/.config/instantos/themes/"$1")"
         return
     fi
 
@@ -109,18 +107,50 @@ gettheme() {
         return
     fi
 
-    # TODO: archive support
-    # TODO: https download support
-    # TODO: ipfs download support
+    if [ -f "$1" ]; then
+        THEMEARCHIVEPATH="$(realpath "$1")"
+        export THEMEARCHIVEPATH
+    else
+        mkdir -p "/tmp/instantthemesdownload"
+        pushd /tmp/instantthemesdownload || exit 1
+        [ -e download.tmp ] && rm download.tmp
+        if grep -q '^https://' <<<"$1"; then
+            curl "$1" >download.tmp
+        fi
+        if grep -q '^ipfs://' <<<"$1"; then
+            IPFSCID="$(echo "$1" | grep -o '[^/]*$')"
+            if command -v ipfs; then
+                ipfs get "$IPFSCID" -o "download.tmp"
+            else
+                curl "http://ipfs.io/ipfs/$IPFSCID" >download.tmp
+            fi
+        fi
+        [ -e ./download.tmp ] && THEMERETURNPATH="$(realpath download.tmp)"
 
-    export GIT_ASKPASS="instantthemes"
-    if git ls-remote --exit-code "$1" &>/dev/null; then
-        pushd ~/.config/instantos/themes || exit 1
-        git clone "$1" &>/dev/null || return 1
-        [ -e "$(basename "$1")/theme.toml" ] || return 1
-        realpath "$(basename "$1")"
         popd || exit 1
     fi
+
+    # TODO: archive support
+
+    export GIT_ASKPASS="instantthemes"
+    checkgit() {
+        if git ls-remote --exit-code "$1" &>/dev/null; then
+            pushd ~/.config/instantos/themes || exit 1
+            git clone --depth 1 "$1" &>/dev/null || return 1
+            [ -e "$(basename "$1")/theme.toml" ] || return 1
+            GITTHEMEPATH="$(realpath "$(basename "$1")")"
+            popd || exit 1
+        fi
+
+    }
+
+    checkgit "$1"
+    export THEMERETURNPATH
+    [ -n "$GITTHEMEPATH" ] && THEMERETURNPATH="$GITTHEMEPATH" && return
+    checkgit "https://github.com/$1"
+    [ -n "$GITTHEMEPATH" ] && THEMERETURNPATH="$GITTHEMEPATH" && return
+    checkgit "https://gitlab.com/$1.git"
+    [ -n "$GITTHEMEPATH" ] && THEMERETURNPATH="$GITTHEMEPATH" && return
 
     if [ -e /usr/share/instantthemes/themes/"$1"/theme.toml ]; then
         echo /usr/share/instantthemes/themes/"$1"
