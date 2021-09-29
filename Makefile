@@ -20,7 +20,7 @@ install: instantthemes build
 	cp -r scripts $(DESTDIR)$(PREFIX)share/instantthemes/scripts
 	cp -r utils $(DESTDIR)$(PREFIX)share/instantthemes/utils
 	cp -r xresources $(DESTDIR)$(PREFIX)share/instantthemes/xresources
-	install -Dm 755 instantthemes $(DESTDIR)$(PREFIX)bin/instantthemes
+	install -Dm 755 instantthemes.sh $(DESTDIR)$(PREFIX)bin/instantthemes
 
 .PHONY: uninstall
 uninstall:

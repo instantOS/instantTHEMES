@@ -1,0 +1,25 @@
+name = "Arc"
+version = 0
+defaultvariant = "light"
+dependencies = ["arc-gtk-theme", "instantcursors", "papirus-icon-theme", "cantarell-fonts"]
+
+
+[cursor]
+theme = "elementary-instantos"
+size = 16
+
+[font]
+name = "Cantarell"
+size = 12
+
+[icons]
+light = "Papirus"
+dark = "Papirus-Dark"
+
+[gtk]
+[gtk.light]
+theme = "Arc"
+[gtk.dark]
+theme = "Arc-Dark"
+
+

@@ -67,11 +67,33 @@ installtheme() {
 
 }
 
+# fall back to other variant the selected one doesn't exist
+d_variant() {
+
+    if [ "$2" = "dark" ]; then
+        INVVARIANT="light"
+    else
+        INVVARIANT="dark"
+    fi
+
+    TARGET1="$(d "$(sed "s/::/$1/g")")"
+    if [ -z "$TARGET1" ]; then
+        TARGET2="$(d "$(sed "s/::/$INVVARIANT/g")")"
+        echo "$TARGET2"
+    else
+        echo "$TARGET1"
+    fi
+
+}
+
+# applytheme themename [variant]
 applytheme() {
     selecttheme "$1" || return 1
     # TODO: record current theme config
+
     DEFAULTVARIANT="$(d_default light defaultvariant)"
     VARIANT="${2:-$DEFAULTVARIANT}"
+
     setcursor "$(d cursor.theme)"
     # TODO cursor size
 
@@ -80,8 +102,8 @@ applytheme() {
         setgtkfont "$FONTNAME $(d_default 12 font.size)"
     fi
 
-    setgtkicons "$(d icons."$VARIANT")"
-    setgtktheme "$(d gtk."$VARIANT".theme)"
+    setgtkicons "$(d_variant icons.::)"
+    setgtktheme "$(d_variant gtk.::.theme)"
 
     # TODO: qt theme
     # TODO: wallpaper

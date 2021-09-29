@@ -1,7 +1,7 @@
 #... all target ~/.config/dunst/dunstrc
 
 #... main begin
-#... main hash 8B57490637F84DF224BA4385BDF0680AC9DDEF0F2CDDE8DF6CF831AF632FB673
+#... main hash 363EF7E6ECB9348B89597BF69E636DBF70941253BFAFF62AD1762D07C8771CC2
 
 [global]
 	geometry = "500x7-30+40"
@@ -24,6 +24,7 @@
 	dmenu = /usr/bin/instantmenu -q "notification menu" -l 10 -w -1 -x 1000000 -bw 5 -y 32
     progress_bar_max_width = 500
     progress_bar_frame_width = 2
+    icon_path = icon_path = /usr/share/icons/Papirus-Dark/48x48/status/:/usr/share/icons/Papirus-Dark/48x48/devices/:/usr/share/icons/Papirus-Dark/48x48/apps:/usr/share/icons/Papirus-Dark/16x16/actions
 
 
 [i3blocks]
@@ -34,7 +35,7 @@
 #... main end
 
 #... theme begin
-#... theme hash B157EC95F4E205673F7A502FA365942A3063582BF295D986DA2DBA5AC386A31E
+#... theme hash BC6B0ADC59DC3BE5B674104C3C94C428B4EA47AFD5A450CF3E4707346D3AFD0B
 
 [urgency_low]
     background = "#292F3A"
@@ -47,10 +48,12 @@
     foreground = "#FFFFFF"
     frame_color = "#5293E1"
     timeout = 10
+    highlight = "#5293E1"
 
 [urgency_critical]
     background = "#292F3A"
     foreground = "#FFFFFF"
-    timeout = 20
+    frame_color = "#E0527E"
+    timeout = 0
 
 #... theme end

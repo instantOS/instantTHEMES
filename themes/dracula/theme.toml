@@ -1,0 +1,24 @@
+name = "dracula"
+version = 0
+defaultvariant = "dark"
+dependencies = ["papirus-icon-theme", "instantcursors", "ttf-roboto"]
+
+[font]
+name = "Roboto"
+size = 13
+
+
+[cursor]
+theme = "paper-instantos"
+size = 16
+
+[icons]
+light = "materiacula"
+
+[gtk]
+[gtk.dark]
+theme = "materiacula"
+
+// TODO: 
+// add asset submodule
+//            gitsource: paperbenni/materiacula
