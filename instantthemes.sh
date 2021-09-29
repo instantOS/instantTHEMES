@@ -58,7 +58,7 @@ installtheme() {
 
         installfolder themes themes themes
         installfolder fonts .local/share/fonts fonts && fc-cache -fv
-        # TODO: wallpapers
+        installfolder wallpapers .local/share/wallpapers wallpapers
 
         popd || exit 1
     fi
@@ -69,6 +69,7 @@ installtheme() {
 
 applytheme() {
     selecttheme "$1" || return 1
+    # TODO: record current theme config
     DEFAULTVARIANT="$(d_default light defaultvariant)"
     VARIANT="${2:-$DEFAULTVARIANT}"
     setcursor "$(d cursor.theme)"
@@ -125,12 +126,25 @@ gettheme() {
                 curl "http://ipfs.io/ipfs/$IPFSCID" >download.tmp
             fi
         fi
-        [ -e ./download.tmp ] && THEMERETURNPATH="$(realpath download.tmp)"
+        [ -e ./download.tmp ] && THEMEARCHIVEPATH="$(realpath download.tmp)"
 
         popd || exit 1
     fi
 
-    # TODO: archive support
+    # extract theme from archive
+    if [ -n "$THEMEARCHIVEPATH" ] && [ -f "$THEMEARCHIVEPATH" ]; then
+        if atool -c "$THEMEARCHIVEPATH" 'theme.toml' | grep -q 'name'; then
+            if [ -e ~/.config/instantos/themes/"$THEMENAME" ]; then
+                echo 'overriding existing theme installation'
+                rm -rf ~/.config/instantos/themes/"$THEMENAME"
+            fi
+            atool -X "$THEMEARCHIVEPATH" ~/.config/instantos/themes/"$THEMENAME"
+            THEMERETURNPATH="$(realpath ~/.config/instantos/themes/"$THEMENAME")"
+        else
+            echo 'theme archive invalid'
+            exit 1
+        fi
+    fi
 
     export GIT_ASKPASS="instantthemes"
     checkgit() {
@@ -170,6 +184,12 @@ init)
     ;;
 status)
     echo "TODO: status"
+
+    # TODO: current
+    # theme
+    # variant
+    # version
+
     ;;
 variant)
     echo "TODO: variant"

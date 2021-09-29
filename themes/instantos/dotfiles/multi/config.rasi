@@ -1,0 +1,8 @@
+//... all target ~/.config/rofi/config.rasi
+
+//... main begin
+//... main hash 08E8CD0905666AB508CAAC02F8902BCADFB8CCD6723216290D478725AA3B8AC2
+configuration {
+theme: "~/.config/rofi/arc.rasi";
+}
+//... main end

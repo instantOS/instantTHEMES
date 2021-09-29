@@ -1,0 +1,112 @@
+#... all target ~/.config/rofi/instantos.rasi
+
+//... main begin
+//... main hash F62BA7A96D4ED5017639E929A00453BDFE963EDE3AFE7BB870A4355E5D257BFC
+
+configuration {
+    font:                           "Inter Regular 13";
+    threads:                        0;
+    scroll-method:                  0;
+    disable-history:                false;
+}
+
+* {
+    background:                     #00000000;
+    background-color:               #121212;
+    background-entry:               #00000033;
+    background-alt:                 #384252;
+    foreground:                     #ffffff;
+    foreground-selected:            #ffffff;
+    urgent:                         #F28B8266;
+    urgent-selected:                #F28B8277;
+    border-radius:                  1px;
+}
+
+window {
+    transparency:                   "real";
+    background-color:               @background;
+    text-color:                     @foreground;
+}
+
+prompt {
+    enabled: false;
+}
+
+
+inputbar {
+    background-color:               #384252;
+}
+
+
+entry {
+    background-color:               @background;
+    text-color:                     @foreground;
+    placeholder-color:              @foreground;
+    expand:                         true;
+    horizontal-align:               0.5;
+    placeholder:                    "Search";
+    padding: 10px;
+    blink:                          true;
+}
+
+case-indicator {
+    background-color:               @background;
+    text-color:                     @foreground;
+    spacing:                        0;
+}
+
+
+
+mainbox {
+    background-color:               @background-color;
+    children:                       [ inputbar, listview ];
+    spacing:                        15px;
+    padding:                        15px 2% 15px 2%;
+}
+
+
+element {
+    background-color:               @background;
+    text-color:                     @foreground;
+    orientation:                    vertical;
+    padding:                        15px 0px 15px 0px;
+}
+
+element-text {
+    expand:                         true;
+    vertical-align:                 0.5;
+    margin:                         5px 10px 0px 10px;
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    background-color:               @urgent;
+    text-color:                     @foreground;
+}
+
+element normal.active,
+element alternate.active {
+    background-color:               @background-alt;
+    text-color:                     @foreground;
+}
+
+element selected {
+    border: 0% 0% 0.3% 0%;
+    border-color: #536DFE;
+    background-color:               #89B3F7;
+    text-color:                     #121212;
+}
+
+element selected.urgent {
+    background-color:               @urgent-selected;
+    text-color:                     @foreground;
+}
+
+element selected.active {
+    background-color:               @background-alt;
+    color:                          @foreground-selected;
+}
+
+//... main end
