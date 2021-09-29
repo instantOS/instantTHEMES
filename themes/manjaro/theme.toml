@@ -1,0 +1,23 @@
+name = "Manjaro"
+version = 0
+defaultvariant = "light"
+dependencies = ["matcha-gtk-theme", "maia-icon-theme", "instantcursors", "roboto-ttf"]
+
+[cursor]
+theme = "elementary-instantos"
+size = 16
+
+[font]
+name = "Roboto"
+size = 12
+
+[icons]
+light = "Maia"
+dark = "Maia-Dark"
+
+[gtk]
+[gtk.light]
+theme = "Matcha-light-sea"
+[gtk.dark]
+theme = "Matcha-dark-sea"
+
