@@ -1,7 +1,6 @@
 #... all target ~/.config/dunst/dunstrc
 #... theme begin
 #... theme hash 02FC340962F614931FFC18C3B590551B51187F17E70A4B1C908B2D4C60084D41
-    icon_path = icon_path = /usr/share/icons/Papirus-Dark/48x48/status/:/usr/share/icons/Papirus-Dark/48x48/devices/:/usr/share/icons/Papirus-Dark/48x48/apps:/usr/share/icons/Papirus-Dark/16x16/actions
 
 [base16_low]
 	msg_urgency = low
