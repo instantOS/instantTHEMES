@@ -1,0 +1,23 @@
+name = "Mac"
+version = 0
+defaultvariant = "light"
+dependencies = ["otf-apple-sf-pro", "mcmojave-circle-icon-theme-git", "instantcursors", "ttf-monaco"]
+
+[cursor]
+theme = "osx-instantos"
+size = 16
+
+[font]
+name = "SF Pro Display"
+size = 10
+
+[icons]
+light = "McMojave-circle"
+dark = "McMojave-circle-dark"
+
+[gtk]
+[gtk.light]
+theme = "Mojave-light"
+[gtk.dark]
+theme = "Mojave-dark"
+

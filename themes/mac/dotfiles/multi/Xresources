@@ -1,8 +1,6 @@
 !... all target ~/.Xresources
-!... theme begin
-!... theme hash 419B44FCE2E4135E3DBDB5C7E2935D31B8889066749E6C2244E194D13F8FE918
-! papertheme
-! mac theme
+!... main begin
+!... main hash 419B44FCE2E4135E3DBDB5C7E2935D31B8889066749E6C2244E194D13F8FE918
 
 #define S_base03        #002b36
 #define S_base02        #073642
@@ -62,4 +60,4 @@
 *color15:               S_base3
 
 URxvt.font: xft:SF Mono:size=13
-!... theme end
+!... main end

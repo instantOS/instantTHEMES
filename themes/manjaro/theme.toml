@@ -1,7 +1,7 @@
 name = "Manjaro"
 version = 0
 defaultvariant = "light"
-dependencies = ["matcha-gtk-theme", "maia-icon-theme", "instantcursors", "roboto-ttf"]
+dependencies = ["matcha-gtk-theme", "maia-icon-theme", "instantcursors", "roboto-ttf", "adobe-source-code-pro-fonts"]
 
 [cursor]
 theme = "elementary-instantos"

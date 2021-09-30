@@ -1,6 +1,6 @@
 !... all target ~/.Xresources
-!... theme begin
-!... theme hash 65948CBC8E06F6F4EEA33B8B334447A7E70BA943A8197FEAC6F862BE64FE99C3
+!... main begin
+!... main hash 65948CBC8E06F6F4EEA33B8B334447A7E70BA943A8197FEAC6F862BE64FE99C3
 ! papertheme
 
 ! Dracula Xresources palette
@@ -25,4 +25,4 @@
 
 
 URxvt.font: xft:Monaco Nerd Font Mono:size=17
-!... theme end
+!... main end
