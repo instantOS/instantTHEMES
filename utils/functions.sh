@@ -6,15 +6,6 @@
 ### General utilities ###
 #########################
 
-tparse() {
-    if [ "$1" = "q" ]; then
-        shift 1
-        yq ".theme.${1}" <"$THEMEFILE" &>/dev/null || return 1
-    else
-        yq ".theme.${1}" <"$THEMEFILE" | sed 's/^"//g' | sed 's/"$//g'
-    fi
-}
-
 # checks if either a theme or icon set exists in folder $1
 gtkloop() {
     cd "$1" || exit
@@ -24,6 +15,28 @@ gtkloop() {
         grep -iq "Name.*=$2.*" ./"$i"/index.theme && return 0
     done
     return 1
+}
+
+echohelp() {
+    echo 'Usage: instantthemes <command> [options...]
+
+Commands:
+    apply <theme name>
+        applies a theme to the system
+    install <theme location>
+        install a theme from a specified location. this can be an archive or
+        folder containing the theme or a git repository
+    variant <dark/light/auto/default>
+        select the theme variant to be used. auto switches themes depending on
+            the time of day. default uses the variant specified by the theme
+    status
+        show information about the current theming
+    init
+        start a wizard to create a new theme
+        (not implemented yet)
+    help
+        show this message
+    '
 }
 
 ######################
@@ -310,16 +323,35 @@ setkvantumtheme() {
     sed -i 's/^theme=*/theme='"$1"'/g' ~/.config/Kvantum/kvantum.kvconfig
 }
 
-# copies a rofi theme config
-rofitheme() {
-    [ -z "$1" ] || return
 
-    echo "Setting rofi theme to $1"
-    mkdir -p ~/.config/rofi &>/dev/null
-    cat /usr/share/instantdotfiles/rofi/"$1".rasi >~/.config/rofi/"$1".rasi
+###################
+# Theme utilities #
+###################
 
-    echo "configuration {" >~/.config/rofi/config.rasi
-    echo "theme: \"~/.config/rofi/$1.rasi\";" >>~/.config/rofi/config.rasi
-    echo "}" >>~/.config/rofi/config.rasi
+
+getvariant(){
+    CONFIGVARIANT="$(iconf themevariant)"
+
+    case "$CONFIGVARIANT" in
+        light)
+            echo light
+            ;;
+        dark)
+            echo dark
+            ;;
+        *)
+            # auto detect if not set or corrupted
+            HOUR="$(date +%H)"
+            if [ "$HOUR" -gt 19 ] || [ "$HOUR" -lt 6 ]
+            then
+                echo dark
+            else
+                echo light
+            fi
+            ;;
+    esac
+
 }
+
+
 

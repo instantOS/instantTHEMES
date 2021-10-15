@@ -71,6 +71,7 @@ installtheme() {
 d_variant() {
 
     if [ "$2" = "dark" ]; then
+        # inverted_variant
         INVVARIANT="light"
     else
         INVVARIANT="dark"
@@ -89,7 +90,7 @@ d_variant() {
 # applytheme themename [variant]
 applytheme() {
     selecttheme "$1" || return 1
-    # TODO: record current theme config
+    iconf instanttheme "$1"
 
     DEFAULTVARIANT="$(d_default light defaultvariant)"
     VARIANT="${2:-$DEFAULTVARIANT}"
