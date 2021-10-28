@@ -34,6 +34,8 @@ Commands:
     init
         start a wizard to create a new theme
         (not implemented yet)
+    list
+        list installed themes
     help
         show this message
     '

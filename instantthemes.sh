@@ -214,6 +214,10 @@ status)
     # version
 
     ;;
+list)
+    [ -e "$HOME"/.config/instantos/themes/ ] && ls ~/.config/instantos/themes/
+    ls /usr/share/instantthemes/themes
+    ;;
 variant)
     echo "TODO: variant"
     echo 'dark/light/auto'
@@ -223,6 +227,9 @@ install)
     installtheme "$(gettheme "$2")"
     ;;
 help)
+    echohelp
+    ;;
+*)
     echohelp
     ;;
 esac
