@@ -1,6 +1,6 @@
 #... all target ~/.config/dunst/dunstrc
 #... theme begin
-#... theme hash E86B6DD33F4C938870DD5E1EF0B5E2534293CAC4180DD18CDE163F69883F3FAD
+#... theme hash 012D4A7D358EF4E03BFED7E48B4DE30F043C4C808B67AD82A70C370D8B006551
 
 [base16_low]
 	msg_urgency = low
