@@ -24,7 +24,11 @@ d() {
 
 d_default() {
     DASELANSWER="$(d "$2")"
-    [ -z "$DASELANSWER" ] && echo "$1"
+    if [ -z "$DASELANSWER" ]; then
+        echo "$1"
+    else
+        echo "$DASELANSWER"
+    fi
 }
 
 selecttheme() {
@@ -46,13 +50,13 @@ installfolder() {
 
 installtheme() {
     selecttheme "$1" || return 1
-    pushd "$1" || exit 1
+    pushd "$1" &>/dev/null || exit 1
 
     # install pacman dependencies
     instantinstall $(d 'dependencies' | sed 's/\[//g' | sed 's/\]//g')
 
     if [ -e ./assets/ ]; then
-        pushd assets || exit 1
+        pushd assets &>/dev/null || exit 1
 
         installfolder icons icons icons && gtk-update-icon-cache
 
@@ -60,10 +64,10 @@ installtheme() {
         installfolder fonts .local/share/fonts fonts && fc-cache -fv
         installfolder wallpapers .local/share/wallpapers wallpapers
 
-        popd || exit 1
+        popd &>/dev/null || exit 1
     fi
 
-    popd || exit 1
+    popd &>/dev/null || exit 1
 
 }
 
@@ -77,9 +81,9 @@ d_variant() {
         INVVARIANT="dark"
     fi
 
-    TARGET1="$(d "$(sed "s/::/$1/g")")"
+    TARGET1="$(d "$(sed "s/::/$VARIANT/g" <<<"$1")")"
     if [ -z "$TARGET1" ]; then
-        TARGET2="$(d "$(sed "s/::/$INVVARIANT/g")")"
+        TARGET2="$(d "$(sed "s/::/$INVVARIANT/g" <<<"$1")")"
         echo "$TARGET2"
     else
         echo "$TARGET1"
@@ -103,17 +107,17 @@ applytheme() {
         setgtkfont "$FONTNAME $(d_default 12 font.size)"
     fi
 
-    setgtkicons "$(d_variant icons.::)"
-    setgtktheme "$(d_variant gtk.::.theme)"
+    setgtkicons "$(d_variant icons.:: "$VARIANT")"
+    setgtktheme "$(d_variant gtk.::.theme "$VARIANT")"
 
     # TODO: qt theme
     # TODO: wallpaper
 
     if [ -e ./dotfiles ]; then
-        pushd dotfiles || exit 1
+        pushd dotfiles &>/dev/null || exit 1
         [ -e ./"$VARIANT" ] && imosid apply ./"$VARIANT"
         [ -e ./multi/ ] && imosid apply ./multi
-        popd || exit 1
+        popd &>/dev/null || exit 1
     fi
 
 }
@@ -136,7 +140,7 @@ gettheme() {
         export THEMEARCHIVEPATH
     else
         mkdir -p "/tmp/instantthemesdownload"
-        pushd /tmp/instantthemesdownload || exit 1
+        pushd /tmp/instantthemesdownload &>/dev/null || exit 1
         [ -e download.tmp ] && rm download.tmp
         if grep -q '^https://' <<<"$1"; then
             curl "$1" >download.tmp
@@ -151,7 +155,7 @@ gettheme() {
         fi
         [ -e ./download.tmp ] && THEMEARCHIVEPATH="$(realpath download.tmp)"
 
-        popd || exit 1
+        popd &>/dev/null || exit 1
     fi
 
     # extract theme from archive
@@ -169,14 +173,14 @@ gettheme() {
         fi
     fi
 
-    export GIT_ASKPASS="instantthemes"
+    export GIT_ASKPASS="echo"
     checkgit() {
         if git ls-remote --exit-code "$1" &>/dev/null; then
-            pushd ~/.config/instantos/themes || exit 1
+            pushd -q ~/.config/instantos/themes &>/dev/null || exit 1
             git clone --depth 1 "$1" &>/dev/null || return 1
             [ -e "$(basename "$1")/theme.toml" ] || return 1
             GITTHEMEPATH="$(realpath "$(basename "$1")")"
-            popd || exit 1
+            popd &>/dev/null || exit 1
         fi
 
     }
@@ -207,6 +211,10 @@ init)
     ;;
 status)
     echo "TODO: status"
+    # get current theme name
+    # select theme
+    # d stuff
+    #
 
     # TODO: current
     # theme
