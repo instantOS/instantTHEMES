@@ -37,6 +37,7 @@ selecttheme() {
         return 1
     fi
     DASELFILE="$(realpath "$1/theme.toml")"
+    cd "$1" || exit 1
 }
 
 installfolder() {
@@ -116,9 +117,11 @@ applytheme() {
     if [ -e ./dotfiles ]; then
         pushd dotfiles &>/dev/null || exit 1
         [ -e ./"$VARIANT" ] && imosid apply ./"$VARIANT"
+        echo "applying dotfiles"
         [ -e ./multi/ ] && imosid apply ./multi
         popd &>/dev/null || exit 1
     fi
+    xrdb ~/.Xresources
 
 }
 
