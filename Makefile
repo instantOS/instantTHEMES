@@ -13,9 +13,9 @@ imosid:
 install:
 	$(info "INFO: install PREFIX: $(PREFIX)")
 	mkdir -p $(DESTDIR)$(PREFIX)share/instantthemes
-	cp -r scripts $(DESTDIR)$(PREFIX)share/instantthemes/scripts
-	cp -r themes $(DESTDIR)$(PREFIX)share/instantthemes/themes
-	cp -r utils $(DESTDIR)$(PREFIX)share/instantthemes/utils
+	cp -r scripts $(DESTDIR)$(PREFIX)share/instantthemes/
+	cp -r themes $(DESTDIR)$(PREFIX)share/instantthemes/
+	cp -r utils $(DESTDIR)$(PREFIX)share/instantthemes/
 	install -Dm 755 instantthemes.sh $(DESTDIR)$(PREFIX)bin/instantthemes
 
 .PHONY: uninstall
