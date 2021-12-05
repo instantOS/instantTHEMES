@@ -64,6 +64,13 @@ installtheme() {
 
     echo "installing theme $(tparse name)"
 
+    THEMEDIR=/home/$USER/.themes
+
+    if [ ! -d "$THEMEDIR" ]; then
+	echo ".themes doesn't exist, creating"
+	mkdir $THEMEDIR
+    fi
+
     if tparse q gtk; then
         installfont gtk || return 1
         if tparse q gtk.theme.name && ! themeexists "$(tparse gtk.theme.name)"; then
