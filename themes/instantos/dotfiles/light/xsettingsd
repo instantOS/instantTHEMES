@@ -1,0 +1,10 @@
+#... all target ~/.xsettingsd
+
+#... main begin
+#... main hash 09111859CA9FF1B08CE7920C6DA4D81896E3AE8A66B2C4A368C3DC21D36D8BC7
+
+Gtk/CursorThemeName "elementary"
+Net/ThemeName "Qogir"
+Net/IconThemeName "Papirus"
+
+#... main end
