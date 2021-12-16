@@ -35,7 +35,7 @@
 #... main end
 
 #... theme begin
-#... theme hash BC6B0ADC59DC3BE5B674104C3C94C428B4EA47AFD5A450CF3E4707346D3AFD0B
+#... theme hash C5BBFEEFFA6B2074F2FCDCB6195F61D559ED4F45343B81E5E2DEB40B3947E4A9
 
 [urgency_low]
     background = "#292F3A"
@@ -55,5 +55,10 @@
     foreground = "#FFFFFF"
     frame_color = "#E0527E"
     timeout = 0
+
+[Volume]
+    summary = "Volume *"
+    timeout = 1
+
 
 #... theme end
