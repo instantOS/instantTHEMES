@@ -51,8 +51,8 @@ installfolder() {
 
 installtheme() {
 
-    [ -e "$HOME"/.themes ] &&  mkdir ~/.themes
-    [ -e "$HOME"/.icons ] &&  mkdir ~/.icons
+    [ -e "$HOME"/.themes ] && mkdir ~/.themes
+    [ -e "$HOME"/.icons ] && mkdir ~/.icons
 
     selecttheme "$1" || return 1
     pushd "$1" &>/dev/null || exit 1
@@ -120,17 +120,19 @@ applytheme() {
 
     if [ -e ./dotfiles ]; then
         pushd dotfiles &>/dev/null || exit 1
+
         [ -e ./"$VARIANT" ] && imosid apply ./"$VARIANT"
         echo "applying dotfiles"
         [ -e ./multi/ ] && imosid apply ./multi
         popd &>/dev/null || exit 1
     fi
     xrdb ~/.Xresources
-    
+
     # run xsettingsd for a while to send changes to running applications
-    if [ -e ~/.xsettingsd ] && command -v xsettingsd &> /dev/null
-    then
-        timeout 20 xsettingsd
+    if [ -e ~/.xsettingsd ] && command -v xsettingsd &>/dev/null; then
+        if imosid info ~/.xsettingsd | grep -i ok; then
+            timeout 20 xsettingsd
+        fi
     fi
 
 }
