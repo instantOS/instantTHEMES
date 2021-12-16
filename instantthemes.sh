@@ -126,6 +126,12 @@ applytheme() {
         popd &>/dev/null || exit 1
     fi
     xrdb ~/.Xresources
+    
+    # run xsettingsd for a while to send changes to running applications
+    if [ -e ~/.xsettingsd ] && command -v xsettingsd &> /dev/null
+    then
+        timeout 20 xsettingsd
+    fi
 
 }
 
