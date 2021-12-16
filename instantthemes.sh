@@ -50,6 +50,10 @@ installfolder() {
 }
 
 installtheme() {
+
+    [ -e "$HOME"/.themes ] &&  mkdir ~/.themes
+    [ -e "$HOME"/.icons ] &&  mkdir ~/.icons
+
     selecttheme "$1" || return 1
     pushd "$1" &>/dev/null || exit 1
 
