@@ -35,30 +35,29 @@
 #... main end
 
 #... theme begin
-#... theme hash C5BBFEEFFA6B2074F2FCDCB6195F61D559ED4F45343B81E5E2DEB40B3947E4A9
+#... theme hash 10DCA80D5D6D328008256931EA40B0BB0613A4AAC2FDD9D089B9E96D21902A7A
 
 [urgency_low]
-    background = "#292F3A"
+    background = "#121212"
     foreground = "#FFFFFF"
-    frame_color = "#52E067"
+    frame_color = "#80C895"
     timeout = 5
 
 [urgency_normal]
-    background = "#292F3A"
+    background = "#121212"
     foreground = "#FFFFFF"
-    frame_color = "#5293E1"
+    frame_color = "#88B2F6"
     timeout = 10
-    highlight = "#5293E1"
+    highlight = "#88B2F6"
 
 [urgency_critical]
-    background = "#292F3A"
+    background = "#121212"
     foreground = "#FFFFFF"
-    frame_color = "#E0527E"
+    frame_color = "#F18A81"
     timeout = 0
 
 [Volume]
     summary = "Volume *"
     timeout = 1
-
 
 #... theme end

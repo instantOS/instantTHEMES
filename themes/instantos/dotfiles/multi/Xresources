@@ -1,6 +1,6 @@
 !... all target ~/.Xresources
 !... main begin
-!... main hash 58592B36BBA7940A1A074CEDA495764716B8AF91C53422C59401D902A348BA3C
+!... main hash 6A1FD9ACD6C44CB257FCE11473F1281A68DF85AAE11903CF60977F566BEE7265
 
 URxvt.scrollBar: false
 URxvt.perl-ext-common: resize-font
