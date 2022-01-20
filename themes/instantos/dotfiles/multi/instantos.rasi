@@ -1,10 +1,10 @@
 //... all target ~/.config/rofi/config.rasi
 
 //... main begin
-//... main hash F62BA7A96D4ED5017639E929A00453BDFE963EDE3AFE7BB870A4355E5D257BFC
+//... main hash 2782F027D64BD0FF1A4D642C6D8F89496212267AF3B35504C795619B4002FCFA
 
 configuration {
-    font:                           "Inter Regular 13";
+    font:                           "Inter Regular 12";
     threads:                        0;
     scroll-method:                  0;
     disable-history:                false;
@@ -13,13 +13,16 @@ configuration {
 * {
     background:                     #00000000;
     background-color:               #121212;
+    separatorcolor:                 #121212;
     background-entry:               #00000033;
-    background-alt:                 #384252;
+    background-alt:                 #29313D;
     foreground:                     #ffffff;
     foreground-selected:            #ffffff;
     urgent:                         #F28B8266;
     urgent-selected:                #F28B8277;
-    border-radius:                  1px;
+    border-radius:                  0px;
+    border-color:                   #89B3F7;
+    separator-style: "solid";
 }
 
 window {
@@ -29,12 +32,21 @@ window {
 }
 
 prompt {
-    enabled: false;
+    enabled: true;
+    background-color:               @background-alt;
+}
+
+num-rows {
+    background-color:               @background-alt;
+}
+
+num-filtered-rows {
+    background-color:               @background-alt;
 }
 
 
 inputbar {
-    background-color:               #384252;
+    background-color:               @background-alt;
 }
 
 
@@ -69,15 +81,13 @@ element {
     background-color:               @background;
     text-color:                     @foreground;
     orientation:                    vertical;
-    padding:                        15px 0px 15px 0px;
+    margin:                        5px 0px 5px 0px;
 }
 
 element-text {
     expand:                         true;
     vertical-align:                 0.5;
-    margin:                         5px 10px 0px 10px;
-    background-color: inherit;
-    text-color:       inherit;
+    padding:                        11px 10px 13px 30px;
 }
 
 element normal.urgent,
@@ -92,8 +102,13 @@ element alternate.active {
     text-color:                     @foreground;
 }
 
-element selected {
-    border: 0% 0% 0.3% 0%;
+element alternate.normal {
+    background-color:               @background;
+}
+
+element-text selected {
+    padding:                        15px 0px 15px 0px;
+    border: 0% 0% 0.4% 0%;
     border-color: #536DFE;
     background-color:               #89B3F7;
     text-color:                     #121212;
@@ -108,5 +123,10 @@ element selected.active {
     background-color:               @background-alt;
     color:                          @foreground-selected;
 }
+
+#inputbar {
+    children:   [ entry,case-indicator ];
+}
+
 
 //... main end
