@@ -131,9 +131,11 @@ applytheme() {
     # run xsettingsd for a while to send changes to running applications
     if [ -e ~/.xsettingsd ] && command -v xsettingsd &>/dev/null; then
         if imosid info ~/.xsettingsd | grep -i ok && ! pgrep xsettingsd; then
-            timeout 20 xsettingsd &> /dev/null &
+            timeout 20 xsettingsd &>/dev/null &
         fi
     fi
+
+    instantdpi
 
 }
 
@@ -229,7 +231,7 @@ status)
     # get current theme name
     # select theme
     # d stuff
-    #
+
 
     # TODO: current
     # theme
