@@ -28,3 +28,10 @@ theme = "kvantum"
 theme = "kvanum-dark"
 
 kvantum = "Materia"
+
+[colors]
+background = "#121212"
+accent = "#88B2F6"
+
+
+

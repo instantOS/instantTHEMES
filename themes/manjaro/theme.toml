@@ -21,3 +21,6 @@ theme = "Matcha-light-sea"
 [gtk.dark]
 theme = "Matcha-dark-sea"
 
+[colors]
+background = "#blabla"
+accent = "#blabla"

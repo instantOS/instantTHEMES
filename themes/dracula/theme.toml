@@ -19,6 +19,11 @@ light = "materiacula"
 [gtk.dark]
 theme = "materiacula"
 
-// TODO: 
-// add asset submodule
-//            gitsource: paperbenni/materiacula
+[colors]
+background = "#282A36"
+accent = "#FF79C6"
+
+# // TODO: 
+# // add asset submodule
+# //            gitsource: paperbenni/materiacula
+# 

@@ -249,10 +249,16 @@ install)
     shift 1
     installtheme "$(gettheme "$2")"
     ;;
+query)
+    shift 1
+    selecttheme "$(iconf instanttheme:/usr/share/instantthemes/themes/instantos)"
+    d_default "$2" "$1"
+    ;;
 help)
     echohelp
     ;;
 *)
     echohelp
     ;;
+
 esac

@@ -38,6 +38,8 @@ Commands:
         list installed themes
     help
         show this message
+    query
+        run dasel query command on current theme
     '
 }
 
