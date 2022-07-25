@@ -126,7 +126,9 @@ applytheme() {
         [ -e ./multi/ ] && imosid apply ./multi
         popd &>/dev/null || exit 1
     fi
+
     xrdb ~/.Xresources
+    instantdpi
 
     # run xsettingsd for a while to send changes to running applications
     if [ -e ~/.xsettingsd ] && command -v xsettingsd &>/dev/null; then
@@ -135,7 +137,6 @@ applytheme() {
         fi
     fi
 
-    instantdpi
 
 }
 
