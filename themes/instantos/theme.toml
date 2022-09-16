@@ -17,9 +17,9 @@ dark = "Papirus-Dark"
 
 [gtk]
 [gtk.light]
-theme = "Materia"
+theme = "Qogir"
 [gtk.dark]
-theme = "Materia-dark"
+theme = "Qogir-dark"
 
 [qt]
 [qt.light]

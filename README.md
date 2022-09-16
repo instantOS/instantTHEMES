@@ -6,6 +6,8 @@
 
 # instantTHEMES
 
+## [Documentation](http://instantos.io/docs/instantthemes/)
+
 ## Features
 
 A single theme package for most parts of the OS
@@ -92,6 +94,7 @@ kvantum = "Materia"
 - [X] QT icons
 - [ ] GTK 4 theme
 - [ ] Wallpaper config
+- [ ] dark/light gnome spec support
 
 
 --------
@@ -99,6 +102,7 @@ kvantum = "Materia"
 ## Dependencies
 
 bash
+dasel
 git
 curl
 imosid
