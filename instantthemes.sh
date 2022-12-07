@@ -137,7 +137,6 @@ applytheme() {
         fi
     fi
 
-
 }
 
 # parse argument string into directory location of theme root
@@ -222,7 +221,11 @@ gettheme() {
 case $1 in
 apply)
     # TODO: variant stuff
-    applytheme "$(gettheme "$2")"
+    if [ -z "$2" ]; then
+        applytheme "$(iconf instanttheme:instantos)"
+    else
+        applytheme "$(gettheme "$2")"
+    fi
     ;;
 init)
     echo "TODO: theme creation wizard"
@@ -232,7 +235,6 @@ status)
     # get current theme name
     # select theme
     # d stuff
-
 
     # TODO: current
     # theme
