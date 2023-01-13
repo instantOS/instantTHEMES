@@ -327,35 +327,69 @@ setkvantumtheme() {
     sed -i 's/^theme=*/theme='"$1"'/g' ~/.config/Kvantum/kvantum.kvconfig
 }
 
+##########################
+# Firefox userchrome.css #
+##########################
+
+# install folder $1 as firefox userchrome folder
+# userchrome customizes the firefox interface beyond the css that theme addons have access to
+installuserchrome() {
+    if ! [ -e ./"$1"/userChrome.css ]; then
+        echo "error, userChrome.css theme not found"
+        return 1
+    fi
+
+    if ! [ -e ~/.mozilla/firefox ]; then
+        echo "firefox profile not found, cannot install userchrome"
+        return 1
+    fi
+
+    cd ~/.mozilla/firefox || return 1
+
+    for i in ./*; do
+        if [ -e "$i"/storage/default ]; then
+            if [ -e "$i"/chrome ]; then
+                mv "$i"/chrome "$i"/chrome.bak
+            fi
+            echo "installing userchrome into $(realpath "$i")"
+            cp -r ./"$1" "$i"/chrome
+
+            # userchrome requires an about:config option to be set
+            if ! grep -Fq 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);' "$i"/prefs.js; then
+                if ! [ -e user.js ]; then
+                    echo 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);' >"$i"/user.js
+                    echo "enabling userchrome for firefox, remove $(realpath "$i"/user.js) to disable"
+                fi
+            fi
+
+        fi
+    done
+
+}
 
 ###################
 # Theme utilities #
 ###################
 
-
-getvariant(){
+getvariant() {
     CONFIGVARIANT="$(iconf themevariant)"
 
     case "$CONFIGVARIANT" in
-        light)
-            echo light
-            ;;
-        dark)
+    light)
+        echo light
+        ;;
+    dark)
+        echo dark
+        ;;
+    *)
+        # auto detect if not set or corrupted
+        HOUR="$(date +%H)"
+        if [ "$HOUR" -gt 19 ] || [ "$HOUR" -lt 6 ]; then
             echo dark
-            ;;
-        *)
-            # auto detect if not set or corrupted
-            HOUR="$(date +%H)"
-            if [ "$HOUR" -gt 19 ] || [ "$HOUR" -lt 6 ]
-            then
-                echo dark
-            else
-                echo light
-            fi
-            ;;
+        else
+            echo light
+        fi
+        ;;
     esac
 
 }
-
-
-
