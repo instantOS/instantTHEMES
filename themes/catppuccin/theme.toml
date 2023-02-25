@@ -1,0 +1,19 @@
+name = "catppuccin"
+version = 0
+defaultvariant = "dark"
+dependencies = [
+  "catppuccin-gtk-theme-macchiato",
+  "catppuccin-gtk-theme-latte",
+  "papirus-icon-theme",
+]
+
+
+[gtk]
+[gtk.light]
+theme = "Catppuccin-Latte-Standard-Blue-Light"
+[gtk.dark]
+theme = "Catppuccin-Macchiato-Standard-Blue-Dark"
+
+[icons]
+light = "Papirus"
+dark = "Papirus-Dark"

@@ -1,7 +1,12 @@
 name = "instantOS"
-version = 0
+version = 1
 defaultvariant = "light"
-dependencies = ["materia-gtk-theme", "papirus-icon-theme", "instantcursors", "inter-font"]
+dependencies = [
+  "papirus-icon-theme",
+  "instantcursors",
+  "inter-font",
+  "qogir-gtk-theme"
+]
 
 [cursor]
 theme = "elementary-instantos"
@@ -21,13 +26,14 @@ theme = "Qogir"
 [gtk.dark]
 theme = "Qogir-dark"
 
-[qt]
-[qt.light]
-theme = "kvantum"
-[qt.dark]
-theme = "kvanum-dark"
+# kvantum tends to be a bit buggy, not enabled by default
+# [qt]
+# kvantum = "Qogir"
+# [qt.light]
+# theme = "kvantum"
+# [qt.dark]
+# theme = "kvanum-dark"
 
-kvantum = "Materia"
 
 [colors]
 background = "#121212"
