@@ -1,10 +1,15 @@
 name = "Mac"
 version = 0
 defaultvariant = "light"
-dependencies = ["otf-apple-sf-pro", "mcmojave-circle-icon-theme-git", "instantcursors", "ttf-monaco"]
+dependencies = [
+  "whitesur-icon-theme",
+  "whitesur-gtk-theme",
+  "apple_cursor",
+  "otf-san-francisco",
+]
 
 [cursor]
-theme = "osx-instantos"
+theme = "macOS-Monterey"
 size = 16
 
 [font]
@@ -12,12 +17,12 @@ name = "SF Pro Display"
 size = 10
 
 [icons]
-light = "McMojave-circle"
-dark = "McMojave-circle-dark"
+light = "WhiteSur"
+dark = "WhiteSur-dark"
 
 [gtk]
 [gtk.light]
-theme = "Mojave-light"
+theme = "WhiteSur-Light"
 [gtk.dark]
-theme = "Mojave-dark"
+theme = "WhiteSur-Dark"
 
