@@ -98,6 +98,11 @@ d_variant() {
 
 # applytheme themename [variant]
 applytheme() {
+
+    if imosid info ~/.xsettingsd | grep -q 'modified'; then
+        export XSETTINGSMODIFIED="true"
+    fi
+
     selecttheme "$1" || return 1
     iconf instanttheme "$1"
 
@@ -135,6 +140,10 @@ applytheme() {
         if imosid info ~/.xsettingsd | grep -i ok && ! pgrep xsettingsd; then
             timeout 20 xsettingsd &>/dev/null &
         fi
+    fi
+
+    if [ -z "$XSETTINGSMODIFIED" ]; then
+        imosid compile ~/.xsettingsd
     fi
 
 }

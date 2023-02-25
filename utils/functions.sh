@@ -17,6 +17,20 @@ gtkloop() {
     return 1
 }
 
+# xsetingsd is responsible for immediately reflecting theme changes
+xsetting() {
+    if ! [ -e ~/.xsettingsd ]
+    then
+        echo "$1 $2" > ~/.xsettingsd
+    fi
+    if grep -q "$1" ~/.xsettingsd
+    then
+        sed -i "s~$1 .*~$1 $2~g" ~/.xsettingsd
+    else
+        echo "$1 $2" >> ~/.xsettingsd
+    fi
+}
+
 echohelp() {
     echo 'Usage: instantthemes <command> [options...]
 
@@ -75,9 +89,9 @@ setgtkfont() {
 
     [ -e ~/.gtkrc-2.0 ] && touch ~/.gtkrc-2.0
     if grep -q 'gtk-font-name' ~/.gtkrc-2.0; then
-        sed -i 's/gtk-font-name =.*/gtk-font-name = "'"$1"'"/g' ~/.gtkrc-2.0
+        sed -i 's/gtk-font-name =.*/gtk-font-name="'"$1"'"/g' ~/.gtkrc-2.0
     else
-        echo 'gtk-font-name = "'"$1"'"' >>~/.gtkrc-2.0
+        echo 'gtk-font-name="'"$1"'"' >>~/.gtkrc-2.0
     fi
     # TODO: gtk 4
 
@@ -152,10 +166,8 @@ setgtktheme() {
     [ -z "$1" ] && return
     # set gtk3 settings
     if [ -e ~/.config/gtk-3.0/settings.ini ] && grep -q 'gtk-theme-name' ~/.config/gtk-3.0/settings.ini; then
-        if grep -q "gtk-theme-name=$1$" ~/.config/gtk-3.0/settings.ini; then
-            echo "gtk theme already applied"
-            return
-        else
+        if ! grep -q "gtk-theme-name=$1$" ~/.config/gtk-3.0/settings.ini; then
+            echo "gtk3 theme set to $1"
             sed -i 's/gtk-theme-name=.*/gtk-theme-name='"$1"'/g' ~/.config/gtk-3.0/settings.ini
         fi
     else
@@ -163,10 +175,13 @@ setgtktheme() {
     fi
 
     if [ -e ~/.gtkrc-2.0 ] && grep -q 'gtk-theme-name' ~/.gtkrc-2.0; then
-        sed -i 's/gtk-theme-name =.*/gtk-theme-name = "'"$1"'"/g' ~/.gtkrc-2.0
+        echo "gtk2 theme set to $1"
+        sed -i 's/^gtk-theme-name[ ]*=.*/gtk-theme-name="'"$1"'"/g' ~/.gtkrc-2.0
     else
-        echo 'gtk-theme-name = "'"$1"'"' >>~/.gtkrc-2.0
+        echo 'gtk-theme-name="'"$1"'"' >>~/.gtkrc-2.0
     fi
+
+    xsetting Net/ThemeName "$1"
 
     # TODO: gsettings instructions from https://draculatheme.com/gtk
 
@@ -239,14 +254,16 @@ setgtkicons() {
     fi
 
     if grep -q 'gtk-icon-theme-name' ~/.gtkrc-2.0; then
-        if grep -q 'gtk-icon-theme-name = "'"$1"'"$' ~/.gtkrc-2.0; then
+        if grep -q 'gtk-icon-theme-name[ ]*=[ ]*"'"$1"'"$' ~/.gtkrc-2.0; then
             echo "gtk2 theme already applied"
         else
-            sed -i 's/gtk-icon-theme-name =.*/gtk-icon-theme-name = "'"$1"'"/g' ~/.gtkrc-2.0
+            sed -i 's/gtk-icon-theme-name[ ]*=.*/gtk-icon-theme-name="'"$1"'"/g' ~/.gtkrc-2.0
         fi
     else
-        echo 'gtk-icon-theme-name = "'"$1"'"' >>~/.gtkrc-2.0
+        echo 'gtk-icon-theme-name="'"$1"'"' >>~/.gtkrc-2.0
     fi
+
+    xsetting "Net/IconThemeName" "$1"
 
 }
 
@@ -302,6 +319,8 @@ Xcursor.theme: $1" >>~/.Xresources
             imosid compile ~/.Xresources
         fi
     fi
+
+    xsetting "Gtk/CursorThemeName" "$1"
 }
 
 ######################
