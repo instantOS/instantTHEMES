@@ -1,7 +1,12 @@
 name = "dracula"
-version = 0
+version = 1
 defaultvariant = "dark"
-dependencies = ["papirus-icon-theme", "instantcursors", "ttf-roboto"]
+dependencies = [
+    "dracula-icons-git",
+    "instantcursors",
+    "ttf-roboto",
+    "dracula-gtk-theme"
+]
 
 [font]
 name = "Roboto"
@@ -13,11 +18,15 @@ theme = "paper-instantos"
 size = 16
 
 [icons]
-light = "materiacula"
+light = "Dracula"
+dark = "Dracula"
 
 [gtk]
 [gtk.dark]
-theme = "materiacula"
+theme = "Dracula"
+
+[gtk.light]
+theme = "Dracula"
 
 [colors]
 background = "#282A36"

@@ -168,6 +168,8 @@ setgtktheme() {
         echo 'gtk-theme-name = "'"$1"'"' >>~/.gtkrc-2.0
     fi
 
+    # TODO: gsettings instructions from https://draculatheme.com/gtk
+
 }
 
 # check if gtk theme is installed on system
