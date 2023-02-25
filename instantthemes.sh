@@ -227,11 +227,13 @@ gettheme() {
 
 }
 
+DEFAULTTHEME="/usr/share/instantthemes/themes/instantos"
+
 case $1 in
 apply)
     # TODO: variant stuff
     if [ -z "$2" ]; then
-        applytheme "$(iconf instanttheme:instantos)"
+        applytheme "$(iconf instanttheme:"$DEFAULTTHEME")"
     else
         applytheme "$(gettheme "$2")"
     fi
@@ -265,7 +267,7 @@ install)
     ;;
 query)
     shift 1
-    selecttheme "$(iconf instanttheme:/usr/share/instantthemes/themes/instantos)"
+    selecttheme "$(iconf instanttheme:"$DEFAULTTHEME")"
     d_default "$2" "$1"
     ;;
 help)
