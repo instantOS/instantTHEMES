@@ -13,6 +13,7 @@ THEMECACHEDIR="$HOME/.cache/instantos/themes"
     }
 }
 
+# execute query on selected theme toml file
 d() {
     RESPONSE="$(dasel -f "$DASELFILE" "$@" || echo valuenotfound)"
     if grep -q 'valuenotfound' <<<"$RESPONSE"; then
@@ -22,6 +23,7 @@ d() {
     fi
 }
 
+# execute query and retur default value if no result
 d_default() {
     DASELANSWER="$(d "$2")"
     if [ -z "$DASELANSWER" ]; then
@@ -31,6 +33,7 @@ d_default() {
     fi
 }
 
+# select and find toml file for theme
 selecttheme() {
     if ! [ -e "$1"/theme.toml ]; then
         echo "theme $1 invalid, missing theme.toml"
@@ -40,6 +43,7 @@ selecttheme() {
     cd "$1" || exit 1
 }
 
+# source, dest, name
 installfolder() {
     if [ -e ./"$1"/ ]; then
         [ -d ~/"$2" ] || mkdir -p ~/."$2"
@@ -148,6 +152,10 @@ applytheme() {
 
 }
 
+getcurrenttheme() {
+    iconf instanttheme:"$DEFAULTTHEME"
+}
+
 # parse argument string into directory location of theme root
 gettheme() {
     # locally installed theme
@@ -233,7 +241,7 @@ case $1 in
 apply)
     # TODO: variant stuff
     if [ -z "$2" ]; then
-        applytheme "$(iconf instanttheme:"$DEFAULTTHEME")"
+        applytheme "$(getcurrenttheme)"
     else
         applytheme "$(gettheme "$2")"
     fi
@@ -242,15 +250,12 @@ init)
     echo "TODO: theme creation wizard"
     ;;
 status)
-    echo "TODO: status"
-    # get current theme name
-    # select theme
-    # d stuff
+    CURRENTTHEME="$(getcurrenttheme)"
+    selecttheme "$CURRENTTHEME"
 
-    # TODO: current
-    # theme
-    # variant
-    # version
+    echo "theme: $(d name)"
+    echo "variant: $(getvariant)"
+    echo "version: $(d version)"
 
     ;;
 list)
@@ -267,7 +272,7 @@ install)
     ;;
 query)
     shift 1
-    selecttheme "$(iconf instanttheme:"$DEFAULTTHEME")"
+    selecttheme "$(getcurrenttheme)"
     d_default "$2" "$1"
     ;;
 help)

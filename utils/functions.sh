@@ -101,7 +101,6 @@ gtkdocumentfont() {
     dconf write '/org/mate/desktop/interface/document-font-name' "'$1'"
 }
 
-# Deprecated
 fetchfont() {
     mkdir -p ~/.local/share/fonts &>/dev/null
     mkdir -p /tmp/instantosfonts/"$1"
@@ -392,6 +391,7 @@ installuserchrome() {
 # Theme utilities #
 ###################
 
+# detect light or dark mode
 getvariant() {
     CONFIGVARIANT="$(iconf themevariant)"
 
@@ -412,5 +412,4 @@ getvariant() {
         fi
         ;;
     esac
-
 }
