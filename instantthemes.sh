@@ -239,11 +239,11 @@ DEFAULTTHEME="/usr/share/instantthemes/themes/instantos"
 
 case $1 in
 apply)
-    # TODO: variant stuff
+    VARIANT="$(getvariant)"
     if [ -z "$2" ]; then
-        applytheme "$(getcurrenttheme)"
+        applytheme "$(getcurrenttheme)" "$(getvariant)"
     else
-        applytheme "$(gettheme "$2")"
+        applytheme "$(gettheme "$2")" "$(getvariant)"
     fi
     ;;
 init)
@@ -263,8 +263,28 @@ list)
     ls /usr/share/instantthemes/themes
     ;;
 variant)
-    echo "TODO: variant"
-    echo 'dark/light/auto'
+    V_USAGE="usage: instantthemes variant dark/light/auto"
+    if [ -z "$2" ]; then
+        echo "$V_USAGE"
+    fi
+
+    case "$2" in
+    dark)
+        iconf themevariant dark
+        echo "selected dark theme"
+        ;;
+    light)
+        iconf themevariant light
+        echo "selected light theme"
+        ;;
+    auto)
+        iconf -d themevariant
+        echo "detected theme $(getvariant)"
+        ;;
+    *)
+        echo "$V_USAGE"
+        ;;
+    esac
     ;;
 install)
     shift 1
